@@ -1,11 +1,14 @@
 package net.hath.drawcut;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class StartActivity extends Activity {
+
+    Fragment content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -13,14 +16,15 @@ public class StartActivity extends Activity {
         setContentView(R.layout.activity_start);
 
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().add(R.id.container, new DrawingFragment()).commit();
+            content = new DrawingFragment();
+            content.setHasOptionsMenu(true);
+            getFragmentManager().beginTransaction().add(R.id.container, content).commit();
         }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.start, menu);
         return true;
