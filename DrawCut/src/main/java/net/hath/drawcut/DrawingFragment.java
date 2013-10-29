@@ -35,7 +35,6 @@ public class DrawingFragment extends Fragment{
         menu.findItem(R.id.action_clear).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Log.d(TAG, "Clear!");
                 drawingView.clear();
                 return false;
             }
