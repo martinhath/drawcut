@@ -24,6 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="net.hath.drawcut.NewGestureActivity"
+            android:parentActivityName="net.hath.drawcut.StartActivity">
+
+        </activity>
     </application>
 
 </manifest>

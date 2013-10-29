@@ -7,7 +7,6 @@ import android.gesture.GestureStroke;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -16,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class DrawingView extends View implements View.OnTouchListener {
+public class DrawingView extends SquareView implements View.OnTouchListener {
     @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "DrawingView";
     private static final float STROKE_WIDTH = 10;
@@ -120,15 +119,6 @@ public class DrawingView extends View implements View.OnTouchListener {
         return true;
     }
 
-    private class Point {
-        public float x;
-        public float y;
-
-        public Point(float x, float y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
 }
 
 

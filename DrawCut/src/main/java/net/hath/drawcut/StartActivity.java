@@ -2,6 +2,7 @@ package net.hath.drawcut;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +32,8 @@ public class StartActivity extends Activity {
         menu.findItem(R.id.action_add).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                getFragmentManager().beginTransaction().add(R.id.container, new DrawingFragment()).commit();
+                Intent intent = new Intent(StartActivity.this, NewGestureActivity.class);
+                startActivity(intent);
                 return true;
             }
         });
