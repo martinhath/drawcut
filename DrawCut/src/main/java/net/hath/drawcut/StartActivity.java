@@ -26,7 +26,15 @@ public class StartActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.start, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
+        //noinspection ConstantConditions
+        menu.findItem(R.id.action_add).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                getFragmentManager().beginTransaction().add(R.id.container, new DrawingFragment()).commit();
+                return true;
+            }
+        });
         return true;
     }
 

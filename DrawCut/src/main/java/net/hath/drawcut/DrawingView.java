@@ -1,13 +1,18 @@
 package net.hath.drawcut;
 
 import android.content.Context;
+import android.gesture.Gesture;
+import android.gesture.GesturePoint;
+import android.gesture.GestureStroke;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -22,7 +27,8 @@ public class DrawingView extends View implements View.OnTouchListener {
     private Paint paint;
     private Paint paint_circle;
 
-    List<Point> points = new ArrayList<Point>();
+    ArrayList<GesturePoint> points = new ArrayList<GesturePoint>();
+    List<GestureStroke> strokes = new LinkedList<GestureStroke>();
 
     @SuppressWarnings("UnusedDeclaration")
     public DrawingView(Context context) {
@@ -58,24 +64,41 @@ public class DrawingView extends View implements View.OnTouchListener {
         invalidate();
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
+    public void clear_hard(){
+        strokes.clear();
+        clear();
+    }
 
+    /**
+     * Adds the current GesturePoint List to the Strokelist.
+     */
+    public void commit(){
+        if(points.size() == 0) return;
+        GestureStroke gs = new GestureStroke(points);
+        strokes.add(gs);
+        clear();
+    }
+
+    public Gesture makeGesture(List<GestureStroke> list){
+        Gesture g = new Gesture();
+        for (GestureStroke gs: list){
+            g.addStroke(gs);
+        }
+        return g;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (points.size() <= 1) return;
-        Point p0;
-        Point p1 = points.get(0);
+        GesturePoint p0;
+        GesturePoint p1 = points.get(0);
         for (int i = 1; i < points.size(); i++) {
             p0 = p1;
             p1 = points.get(i);
             // p1 == null means the user has released, and is drawing again.
             // which means that we shouldn't draw a line
-            if(p0 == null || p1==null){
+            if (p0 == null || p1 == null) {
                 continue;
             }
             canvas.drawLine(p0.x, p0.y, p1.x, p1.y, paint);
@@ -85,12 +108,15 @@ public class DrawingView extends View implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-            points.add(null);
+        switch(motionEvent.getAction()){
+            case MotionEvent.ACTION_UP:
+                //commit();
+                break;
+            default:
+                GesturePoint p = new GesturePoint(motionEvent.getX(), motionEvent.getY(), 500);
+                points.add(p);
+                invalidate();
         }
-        Point p = new Point(motionEvent.getX(), motionEvent.getY());
-        points.add(p);
-        invalidate();
         return true;
     }
 
