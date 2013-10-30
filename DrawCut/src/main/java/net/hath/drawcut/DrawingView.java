@@ -105,25 +105,32 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         super.onDraw(canvas);
 
         // Draw old stroke
-        if (! (points_old.size() <= 1)){
+        if (! (points_old.size() < 1)){
             GesturePoint p0;
             GesturePoint p1 = points_old.get(0);
+            canvas.drawCircle(p1.x, p1.y, RADIUS, paint_circle_prev);
             for (int i = 1; i < points_old.size(); i++) {
                 p0 = p1;
                 p1 = points_old.get(i);
                 // p1 == null means the user has released, and is drawing again.
                 // which means that we shouldn't draw a line
-                if (p0 == null || p1 == null) {
-                    continue;
+                if (p0 == null) {
+                } else{
+                    if(p1 == null){
+                        canvas.drawCircle(p0.x, p0.y, RADIUS, paint_circle_prev);
+                    }else{
+                        // Ingen er nulls
+                        canvas.drawCircle(p0.x, p0.y, RADIUS, paint_circle_prev);
+                        canvas.drawLine(p0.x, p0.y, p1.x, p1.y, paint_prev);
+                    }
                 }
-                canvas.drawLine(p0.x, p0.y, p1.x, p1.y, paint_prev);
-                canvas.drawCircle(p0.x, p0.y, RADIUS, paint_circle_prev);
             }
         }
         // Draw current stroke
-        if (points.size() <= 1) return;
+        if (points.size() < 1) return;
         GesturePoint p0;
         GesturePoint p1 = points.get(0);
+        canvas.drawCircle(p1.x, p1.y, RADIUS, paint_circle);
         for (int i = 1; i < points.size(); i++) {
             p0 = p1;
             p1 = points.get(i);
@@ -144,6 +151,7 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
                 commit();
                 break;
             default:
+                Log.d(TAG, "Add point");
                 GesturePoint p = new GesturePoint(motionEvent.getX(), motionEvent.getY(), 500);
                 points.add(p);
                 invalidate();
