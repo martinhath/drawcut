@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -47,7 +50,7 @@ public class DrawingFragment extends Fragment{
 
                 gl.addGesture(c++ + "", g);
 
-                drawingView.clear_hard();
+                drawingView.clear();
 
                 try {
                     String path = Environment.getExternalStorageDirectory().toString();
@@ -76,11 +79,25 @@ public class DrawingFragment extends Fragment{
                 }
                 Log.d(TAG, "Gjettinger_END:");
 
-                drawingView.clear_hard();
+                drawingView.clear();
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        Log.d(TAG, "Menu setup");
+        //noinspection ConstantConditions
+        menu.findItem(R.id.action_clear).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                drawingView.clear();
+                return false;
+            }
+        });
     }
 
 }

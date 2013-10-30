@@ -1,6 +1,8 @@
 package net.hath.drawcut;
 
 import android.app.Activity;
+import android.gesture.Gesture;
+import android.gesture.GestureStroke;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,6 +34,17 @@ public class NewGestureActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Gesture g = new Gesture();
+        for(GestureStroke gs: drawingView.strokes){
+            g.addStroke(gs);
+        }
+
+    }
+
     @SuppressWarnings("ConstantConditions")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,7 +53,7 @@ public class NewGestureActivity extends Activity {
         menu.findItem(R.id.action_clear).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                drawingView.clear_hard();
+                drawingView.clear();
                 return false;
             }
         });
