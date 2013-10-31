@@ -3,13 +3,20 @@ package net.hath.drawcut;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.gesture.Gesture;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class StartActivity extends Activity {
+import java.util.ArrayList;
+import java.util.List;
 
-    Fragment content;
+public class StartActivity extends Activity implements GestureProvider{
+    private static final String TAG = "StartActivity";
+
+    private Fragment content;
+    private List<GestureItem> gestures;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,10 +24,13 @@ public class StartActivity extends Activity {
         setContentView(R.layout.activity_start);
 
         if (savedInstanceState == null) {
-            content = new DrawingFragment();
+            content = new GestureListFragment();
             content.setHasOptionsMenu(true);
             getFragmentManager().beginTransaction().add(R.id.container, content).commit();
         }
+
+        // Skal laste fra DB.
+        gestures = new ArrayList<GestureItem>();
     }
 
 
@@ -33,11 +43,27 @@ public class StartActivity extends Activity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 Intent intent = new Intent(StartActivity.this, NewGestureActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 return true;
             }
         });
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            Gesture g = data.getParcelableExtra("gesture");
+            String name = data.getStringExtra("name");
+
+            addGesture(new GestureItem(g, name));
+            Log.d(TAG, "Added Gesture. ");
+            Log.d(TAG, "Current number of gestures: " + gestures.size());
+
+        }else{
+            Log.w(TAG, "Failed to get result. ");
+        }
     }
 
     @Override
@@ -52,4 +78,13 @@ public class StartActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public List<GestureItem> getGestures() {
+        return gestures;
+    }
+
+    @Override
+    public void addGesture(GestureItem g) {
+        gestures.add(g);
+    }
 }

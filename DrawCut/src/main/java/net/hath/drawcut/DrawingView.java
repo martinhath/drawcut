@@ -151,7 +151,6 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
                 commit();
                 break;
             default:
-                Log.d(TAG, "Add point");
                 GesturePoint p = new GesturePoint(motionEvent.getX(), motionEvent.getY(), 500);
                 points.add(p);
                 invalidate();

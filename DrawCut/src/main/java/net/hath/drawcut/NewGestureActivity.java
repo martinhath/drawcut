@@ -1,18 +1,25 @@
 package net.hath.drawcut;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureStroke;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class NewGestureActivity extends Activity {
 
+    private static final String TAG = "NewGestureActivity";
     TextView header;
     DrawingView drawingView;
+    EditText formName;
+
+    Gesture gesture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +29,7 @@ public class NewGestureActivity extends Activity {
 
 
         drawingView = (DrawingView) findViewById(R.id.drawsurface);
+        formName = (EditText) findViewById(R.id.nameForm);
 
 
         header = (TextView) findViewById(R.id.header);
@@ -34,15 +42,29 @@ public class NewGestureActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
 
+    public void saveGestureAsResult(){
         Gesture g = new Gesture();
         for(GestureStroke gs: drawingView.strokes){
             g.addStroke(gs);
         }
+        gesture = g;
 
+        Intent data = new Intent();
+
+        data.putExtra("gesture", gesture);
+
+        String name = String.valueOf(formName.getText());
+        data.putExtra("name", name);
+
+        setResult(RESULT_OK, data);
+        setResult(RESULT_OK, data);
+    }
+
+    @Override
+    public void finish() {
+        saveGestureAsResult();
+        super.finish();
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -58,5 +80,16 @@ public class NewGestureActivity extends Activity {
             }
         });
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

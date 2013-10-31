@@ -9,4 +9,8 @@
     <string name="create_gesture">Create a new Gesture</string>
     <string name="name">Enter name</string>
 
+    <!-- Dummy strings for development -->
+    <string name="dummy_name">Gesture name</string>
+    <string name="dummy_app">Snapchat</string>
+
 </resources>

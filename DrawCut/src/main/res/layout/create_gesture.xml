@@ -33,7 +33,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/label_name"
+        android:id="@+id/nameForm"
         android:hint="@string/name"
         android:layout_below="@+id/drawsurface"
         android:layout_marginTop="@dimen/margin_small"
