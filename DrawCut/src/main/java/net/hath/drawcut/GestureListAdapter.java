@@ -1,6 +1,7 @@
 package net.hath.drawcut;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,30 +9,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GestureListAdapter extends ArrayAdapter<GestureItem> {
+    private static final String TAG = "GestureListAdapter";
     final LayoutInflater inflater;
-    List<GestureItem> items;
 
-    public GestureListAdapter(Context context, int resource) {
-        super(context, resource);
+    public GestureListAdapter(Context context, int resource, List<GestureItem> objects) {
+        super(context, resource, objects);
         inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        items = new ArrayList<GestureItem>();
-
-    }
-
-    public void setItems(List<GestureItem> list){
-        items = list;
-        notifyDataSetChanged();
+        Log.d(TAG, objects.toString());
+        setNotifyOnChange(true);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, "getView: " + position);
         ViewHolder holder;
-        if(convertView == null){
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.gesturelist_item, null);
             assert convertView != null;
 
@@ -40,9 +35,11 @@ public class GestureListAdapter extends ArrayAdapter<GestureItem> {
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.app = (TextView) convertView.findViewById(R.id.application);
             convertView.setTag(holder);
-        }else{
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        String name = getItem(position).getName();
+        holder.name.setText(position+name);
         return convertView;
     }
 

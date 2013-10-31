@@ -8,12 +8,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StartActivity extends Activity implements GestureProvider{
     private static final String TAG = "StartActivity";
+    private List<GestureSubscriber> subscribers;
 
     private Fragment content;
     private List<GestureItem> gestures;
@@ -29,8 +32,11 @@ public class StartActivity extends Activity implements GestureProvider{
             getFragmentManager().beginTransaction().add(R.id.container, content).commit();
         }
 
+        subscribers = new ArrayList<GestureSubscriber>();
         // Skal laste fra DB.
         gestures = new ArrayList<GestureItem>();
+        gestures.add(new GestureItem(null, "martin"));
+
     }
 
 
@@ -86,5 +92,19 @@ public class StartActivity extends Activity implements GestureProvider{
     @Override
     public void addGesture(GestureItem g) {
         gestures.add(g);
+        for(GestureSubscriber s:subscribers){
+            s.update();
+        }
+        Log.d(TAG, gestures.toString());
+    }
+
+    @Override
+    public void addSubscriber(GestureSubscriber sub) {
+        subscribers.add(sub);
+    }
+
+    @Override
+    public void removeSubscriber(GestureSubscriber sub) {
+        subscribers.remove(sub);
     }
 }
