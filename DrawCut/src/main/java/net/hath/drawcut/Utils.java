@@ -17,7 +17,7 @@ public class Utils{
             FileOutputStream out = new FileOutputStream(fullPath);
             b.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.close();
-            Log.d(TAG, "Saved to " + path + "/test.png");
+            Log.d(TAG, "Saved to " + fullPath);
         } catch (Exception e) {
             Log.w(TAG, "Not saved. ");
             e.printStackTrace();

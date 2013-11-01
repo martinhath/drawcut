@@ -6,14 +6,16 @@ public class GestureItem {
     private String name;
     private Gesture gesture;
 
-    public GestureItem(Gesture g, String n){
+    public GestureItem(Gesture g, String n) {
         gesture = g;
         name = n;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public Gesture getGesture(){
+
+    public Gesture getGesture() {
         return gesture;
     }
 

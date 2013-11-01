@@ -5,6 +5,6 @@
     <color name="grey_lighter">#d0d0d0</color>
     <color name="grey_dark">#555555</color>
 
-    <color name="drawing_color">#33b5e5</color>
-    <color name="drawing_color_prev">#0099cc</color>
+    <color name="drawing_color_fresh">#33b5e5</color>
+    <color name="drawing_color">#0099cc</color>
 </resources>

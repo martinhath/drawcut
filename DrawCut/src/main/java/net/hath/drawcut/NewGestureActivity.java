@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureStroke;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -43,27 +43,38 @@ public class NewGestureActivity extends Activity {
     }
 
 
-    public void saveGestureAsResult(){
+    public void saveGesture(){
         Gesture g = new Gesture();
         for(GestureStroke gs: drawingView.strokes){
             g.addStroke(gs);
         }
         gesture = g;
-
+        // Prepares the gesture for returning to prev. activity.
         Intent data = new Intent();
 
         data.putExtra("gesture", gesture);
 
         String name = String.valueOf(formName.getText());
+        // TODO: Remove when launch
+        name = name.equals("")?String.valueOf(formName.hashCode()):name;
+
         data.putExtra("name", name);
 
         setResult(RESULT_OK, data);
         setResult(RESULT_OK, data);
+
+
+
+        GestureLook glook = drawingView.getGestureLook();
+
+        Bitmap b = GestureUtil.toBitmap(g, glook.getColor().getColor(), glook.getWidth());
+        Utils.saveBitmapToFile(name, b);
+
     }
 
     @Override
     public void finish() {
-        saveGestureAsResult();
+        saveGesture();
         super.finish();
     }
 

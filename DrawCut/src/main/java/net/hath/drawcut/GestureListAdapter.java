@@ -18,13 +18,11 @@ public class GestureListAdapter extends ArrayAdapter<GestureItem> {
     public GestureListAdapter(Context context, int resource, List<GestureItem> objects) {
         super(context, resource, objects);
         inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        Log.d(TAG, objects.toString());
         setNotifyOnChange(true);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.d(TAG, "getView: " + position);
         ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.gesturelist_item, null);

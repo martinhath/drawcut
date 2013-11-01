@@ -24,52 +24,44 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
 
     private Context context;
 
-    private Paint paint;
-    private Paint paint_circle;
+    public GestureLook glook_fresh;
 
-    private Paint paint_prev;
-    private Paint paint_circle_prev;
+    public GestureLook glook;
 
 
     ArrayList<GesturePoint> points = new ArrayList<GesturePoint>();
     ArrayList<GesturePoint> points_old = new ArrayList<GesturePoint>();
     List<GestureStroke> strokes = new LinkedList<GestureStroke>();
 
-    @SuppressWarnings("UnusedDeclaration")
-    public DrawingView(Context context) {
-        super(context);
-        this.context = context;
-        init();
-    }
 
     @SuppressWarnings("UnusedDeclaration")
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         init();
+        Log.d(TAG, "CTOR, 2");
     }
 
     private void init() {
-        if (paint != null) return;
         setOnTouchListener(this);
         setFocusable(true);
         setFocusableInTouchMode(true);
+        glook = new GestureLook();
+        glook_fresh = new GestureLook();
+
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(context.getResources().getColor(R.color.drawing_color_fresh));
+        paint.setStyle(Paint.Style.STROKE);
+        glook_fresh.setColor(paint);
+        glook_fresh.setWidth(STROKE_WIDTH);
+
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(context.getResources().getColor(R.color.drawing_color));
         paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(STROKE_WIDTH);
+        glook.setColor(paint);
+        glook.setWidth(STROKE_WIDTH);
 
-        paint_circle = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint_circle.setColor(context.getResources().getColor(R.color.drawing_color));
-
-        paint_prev = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint_prev.setColor(context.getResources().getColor(R.color.drawing_color_prev));
-        paint_prev.setStyle(Paint.Style.STROKE);
-        paint_prev.setStrokeWidth(STROKE_WIDTH);
-
-        paint_circle_prev = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint_circle_prev.setColor(context.getResources().getColor(R.color.drawing_color_prev));
     }
 
     public void clear() {
@@ -77,6 +69,11 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         points_old.clear();
         strokes.clear();
         invalidate();
+    }
+
+
+    public GestureLook getGestureLook() {
+        return glook;
     }
 
     /**
@@ -105,23 +102,23 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         super.onDraw(canvas);
 
         // Draw old stroke
-        if (! (points_old.size() < 1)){
+        if (!(points_old.size() < 1)) {
             GesturePoint p0;
             GesturePoint p1 = points_old.get(0);
-            canvas.drawCircle(p1.x, p1.y, RADIUS, paint_circle_prev);
+            canvas.drawCircle(p1.x, p1.y, glook.getWidth() / 2, glook.getColor());
             for (int i = 1; i < points_old.size(); i++) {
                 p0 = p1;
                 p1 = points_old.get(i);
                 // p1 == null means the user has released, and is drawing again.
                 // which means that we shouldn't draw a line
                 if (p0 == null) {
-                } else{
-                    if(p1 == null){
-                        canvas.drawCircle(p0.x, p0.y, RADIUS, paint_circle_prev);
-                    }else{
+                } else {
+                    if (p1 == null) {
+                        canvas.drawCircle(p0.x, p0.y, glook.getWidth() / 2, glook.getColor());
+                    } else {
                         // Ingen er nulls
-                        canvas.drawCircle(p0.x, p0.y, RADIUS, paint_circle_prev);
-                        canvas.drawLine(p0.x, p0.y, p1.x, p1.y, paint_prev);
+                        canvas.drawCircle(p0.x, p0.y, glook.getWidth() / 2, glook.getColor());
+                        canvas.drawLine(p0.x, p0.y, p1.x, p1.y, glook.getColor());
                     }
                 }
             }
@@ -130,7 +127,7 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         if (points.size() < 1) return;
         GesturePoint p0;
         GesturePoint p1 = points.get(0);
-        canvas.drawCircle(p1.x, p1.y, RADIUS, paint_circle);
+        canvas.drawCircle(p1.x, p1.y, glook_fresh.getWidth() / 2, glook_fresh.getColor());
         for (int i = 1; i < points.size(); i++) {
             p0 = p1;
             p1 = points.get(i);
@@ -139,8 +136,8 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
             if (p0 == null || p1 == null) {
                 continue;
             }
-            canvas.drawLine(p0.x, p0.y, p1.x, p1.y, paint);
-            canvas.drawCircle(p0.x, p0.y, RADIUS, paint_circle);
+            canvas.drawLine(p0.x, p0.y, p1.x, p1.y, glook_fresh.getColor());
+            canvas.drawCircle(p0.x, p0.y, glook_fresh.getWidth() / 2, glook_fresh.getColor());
         }
     }
 
