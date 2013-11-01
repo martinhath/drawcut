@@ -46,7 +46,7 @@ public class DrawingFragment extends Fragment{
             public void onClick(View view) {
                 drawingView.commit();
                 Gesture g = drawingView.makeGesture(drawingView.strokes);
-                Bitmap b = g.toBitmap(400, 400, 0, Color.WHITE);
+                Bitmap b = g.toBitmap(198, 198, 0, Color.WHITE);
 
                 gl.addGesture(c++ + "", g);
 

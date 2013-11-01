@@ -11,34 +11,34 @@
                 android:background="@color/white">
 
     <net.hath.drawcut.DrawingView
-        android:id="@+id/drawsurface"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:clickable="true"
-        android:background="@drawable/white_box"
-        android:layout_below="@+id/header"
-        android:layout_alignParentLeft="true"/>
+            android:id="@+id/drawsurface"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:background="@drawable/white_box"
+            android:layout_below="@+id/header"
+            android:layout_alignParentLeft="true"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/create_gesture"
-        android:id="@+id/header"
-        android:textSize="@dimen/text_large"
-        android:textColor="@color/grey_dark"
-        android:layout_alignParentTop="true"
-        android:layout_margin="@dimen/margin_small"
-        android:layout_alignParentLeft="true"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_gesture"
+            android:id="@+id/header"
+            android:textSize="@dimen/text_large"
+            android:textColor="@color/grey_dark"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/margin_small"
+            android:layout_alignParentLeft="true"/>
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/nameForm"
-        android:hint="@string/name"
-        android:layout_below="@+id/drawsurface"
-        android:layout_marginTop="@dimen/margin_small"
-        android:maxLines="1"
-        android:inputType="textNoSuggestions"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameForm"
+            android:hint="@string/name"
+            android:layout_below="@+id/drawsurface"
+            android:layout_marginTop="@dimen/margin_small"
+            android:maxLines="1"
+            android:inputType="textNoSuggestions"/>
 
 
 </RelativeLayout>
