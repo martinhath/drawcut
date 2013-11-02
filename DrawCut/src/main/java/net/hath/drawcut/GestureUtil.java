@@ -27,6 +27,7 @@ public class GestureUtil {
     private static final boolean BITMAP_RENDERING_DITHER = true;
     private static final float BITMAP_RENDERING_WIDTH = 10;
     private static final int NUM_SAMPLES = 20;
+    private static final String TAG = "GestureUtil";
 
     public static Bitmap toBitmap(Gesture gesture, int color, float strokeWidth) {
         RectF bounds = gesture.getBoundingBox();
@@ -35,7 +36,7 @@ public class GestureUtil {
         final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(bitmap);
 
-        int edge = 0;
+        int edge = (int) strokeWidth;
         //canvas.translate(edge, edge);
 
         final Paint paint = new Paint();
@@ -57,4 +58,5 @@ public class GestureUtil {
 
         return bitmap;
     }
+
 }

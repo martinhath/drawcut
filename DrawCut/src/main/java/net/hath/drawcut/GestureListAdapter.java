@@ -38,6 +38,10 @@ public class GestureListAdapter extends ArrayAdapter<GestureItem> {
         }
         String name = getItem(position).getName();
         holder.name.setText(position+name);
+
+
+        holder.image.setImageBitmap(getItem(position).getImage());
+
         return convertView;
     }
 

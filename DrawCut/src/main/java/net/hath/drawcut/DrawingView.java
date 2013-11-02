@@ -1,6 +1,7 @@
 package net.hath.drawcut;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.gesture.Gesture;
 import android.gesture.GesturePoint;
 import android.gesture.GestureStroke;
@@ -19,20 +20,16 @@ import java.util.List;
 public class DrawingView extends SquareView implements View.OnTouchListener {
     @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "DrawingView";
-    private static final float STROKE_WIDTH = 10;
-    public static final int RADIUS = (int) STROKE_WIDTH / 2;
 
     private Context context;
-
-    public GestureLook glook_fresh;
-
-    public GestureLook glook;
-
 
     ArrayList<GesturePoint> points = new ArrayList<GesturePoint>();
     ArrayList<GesturePoint> points_old = new ArrayList<GesturePoint>();
     List<GestureStroke> strokes = new LinkedList<GestureStroke>();
 
+    private Paint color;
+    private Paint color_fresh;
+    private float strokeWidth;
 
     @SuppressWarnings("UnusedDeclaration")
     public DrawingView(Context context, AttributeSet attrs) {
@@ -46,22 +43,23 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         setOnTouchListener(this);
         setFocusable(true);
         setFocusableInTouchMode(true);
-        glook = new GestureLook();
-        glook_fresh = new GestureLook();
 
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(context.getResources().getColor(R.color.drawing_color_fresh));
-        paint.setStyle(Paint.Style.STROKE);
-        glook_fresh.setColor(paint);
-        glook_fresh.setWidth(STROKE_WIDTH);
+        SharedPreferences spref = context.getSharedPreferences("gesturesettings", Context.MODE_PRIVATE);
+        strokeWidth = spref.getFloat("gestureStrokeWidth", 1);
 
+        color = new Paint(Paint.ANTI_ALIAS_FLAG);
+        color.setColor(getResources().getColor(R.color.drawing_color));
+        color.setStyle(Paint.Style.STROKE);
+        color.setStrokeJoin(Paint.Join.ROUND);
+        color.setStrokeCap(Paint.Cap.ROUND);
+        color.setStrokeMiter(0.5f);
+        color.setStrokeWidth(strokeWidth);
 
-        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(context.getResources().getColor(R.color.drawing_color));
-        paint.setStyle(Paint.Style.STROKE);
-        glook.setColor(paint);
-        glook.setWidth(STROKE_WIDTH);
-
+        color_fresh =  new Paint(Paint.ANTI_ALIAS_FLAG);
+        color_fresh.setStyle(Paint.Style.STROKE);
+        color_fresh.setStrokeJoin(Paint.Join.ROUND);
+        color_fresh.setColor(getResources().getColor(R.color.drawing_color_fresh));
+        color_fresh.setStrokeWidth(strokeWidth);
     }
 
     public void clear() {
@@ -69,11 +67,6 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         points_old.clear();
         strokes.clear();
         invalidate();
-    }
-
-
-    public GestureLook getGestureLook() {
-        return glook;
     }
 
     /**
@@ -105,7 +98,7 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         if (!(points_old.size() < 1)) {
             GesturePoint p0;
             GesturePoint p1 = points_old.get(0);
-            canvas.drawCircle(p1.x, p1.y, glook.getWidth() / 2, glook.getColor());
+            canvas.drawCircle(p1.x, p1.y, strokeWidth / 2, color);
             for (int i = 1; i < points_old.size(); i++) {
                 p0 = p1;
                 p1 = points_old.get(i);
@@ -114,11 +107,10 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
                 if (p0 == null) {
                 } else {
                     if (p1 == null) {
-                        canvas.drawCircle(p0.x, p0.y, glook.getWidth() / 2, glook.getColor());
+                        canvas.drawCircle(p0.x, p0.y, strokeWidth / 2, color);
                     } else {
                         // Ingen er nulls
-                        canvas.drawCircle(p0.x, p0.y, glook.getWidth() / 2, glook.getColor());
-                        canvas.drawLine(p0.x, p0.y, p1.x, p1.y, glook.getColor());
+                        canvas.drawLine(p0.x, p0.y, p1.x, p1.y, color);
                     }
                 }
             }
@@ -127,7 +119,7 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         if (points.size() < 1) return;
         GesturePoint p0;
         GesturePoint p1 = points.get(0);
-        canvas.drawCircle(p1.x, p1.y, glook_fresh.getWidth() / 2, glook_fresh.getColor());
+        canvas.drawCircle(p1.x, p1.y, strokeWidth / 2, color_fresh);
         for (int i = 1; i < points.size(); i++) {
             p0 = p1;
             p1 = points.get(i);
@@ -136,8 +128,7 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
             if (p0 == null || p1 == null) {
                 continue;
             }
-            canvas.drawLine(p0.x, p0.y, p1.x, p1.y, glook_fresh.getColor());
-            canvas.drawCircle(p0.x, p0.y, glook_fresh.getWidth() / 2, glook_fresh.getColor());
+            canvas.drawLine(p0.x, p0.y, p1.x, p1.y, color_fresh);
         }
     }
 

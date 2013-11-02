@@ -3,13 +3,13 @@ package net.hath.drawcut;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.gesture.Gesture;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,12 @@ public class StartActivity extends Activity implements GestureProvider{
         gestures = new ArrayList<GestureItem>();
         gestures.add(new GestureItem(null, "martin"));
 
+        SharedPreferences.Editor preferences = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
+        preferences.putInt("gestureColor", R.color.drawing_color);
+        preferences.putFloat("gestureStrokeWidth", 10f);
+        preferences.apply();
+
+
     }
 
 
@@ -63,9 +69,18 @@ public class StartActivity extends Activity implements GestureProvider{
             Gesture g = data.getParcelableExtra("gesture");
             String name = data.getStringExtra("name");
 
-            addGesture(new GestureItem(g, name));
+            GestureItem gi = new GestureItem(g, name);
+
+            SharedPreferences prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE);
+            Bitmap b = GestureUtil.toBitmap(g, prefs.getInt("gestureColor", 0), prefs.getFloat("gestureStrokeWidth", 1));
+
+            Utils.saveBitmapToFile(""+gestures.size(), b);
+
+            gi.setImage(b);
+
+            addGesture(gi);
+
             Log.d(TAG, "Added Gesture. ");
-            Log.d(TAG, "Current number of gestures: " + gestures.size());
 
         }else{
             Log.w(TAG, "Failed to get result. ");

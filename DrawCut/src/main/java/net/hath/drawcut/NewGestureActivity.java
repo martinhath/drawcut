@@ -57,19 +57,12 @@ public class NewGestureActivity extends Activity {
         String name = String.valueOf(formName.getText());
         // TODO: Remove when launch
         name = name.equals("")?String.valueOf(formName.hashCode()):name;
+        // END_TODO
 
         data.putExtra("name", name);
 
         setResult(RESULT_OK, data);
         setResult(RESULT_OK, data);
-
-
-
-        GestureLook glook = drawingView.getGestureLook();
-
-        Bitmap b = GestureUtil.toBitmap(g, glook.getColor().getColor(), glook.getWidth());
-        Utils.saveBitmapToFile(name, b);
-
     }
 
     @Override
