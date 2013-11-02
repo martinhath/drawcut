@@ -8,7 +8,6 @@ import android.gesture.GestureStroke;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -31,12 +30,10 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
     private Paint color_fresh;
     private float strokeWidth;
 
-    @SuppressWarnings("UnusedDeclaration")
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         init();
-        Log.d(TAG, "CTOR, 2");
     }
 
     private void init() {
@@ -47,18 +44,20 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         SharedPreferences spref = context.getSharedPreferences("gesturesettings", Context.MODE_PRIVATE);
         strokeWidth = spref.getFloat("gestureStrokeWidth", 1);
 
+
         color = new Paint(Paint.ANTI_ALIAS_FLAG);
-        color.setColor(getResources().getColor(R.color.drawing_color));
+        color.setColor(spref.getInt("gestureColor", 0));
         color.setStyle(Paint.Style.STROKE);
+        color.setDither(true);
         color.setStrokeJoin(Paint.Join.ROUND);
         color.setStrokeCap(Paint.Cap.ROUND);
         color.setStrokeMiter(0.5f);
         color.setStrokeWidth(strokeWidth);
 
-        color_fresh =  new Paint(Paint.ANTI_ALIAS_FLAG);
+        color_fresh = new Paint(Paint.ANTI_ALIAS_FLAG);
         color_fresh.setStyle(Paint.Style.STROKE);
         color_fresh.setStrokeJoin(Paint.Join.ROUND);
-        color_fresh.setColor(getResources().getColor(R.color.drawing_color_fresh));
+        color_fresh.setColor(spref.getInt("gestureColorFresh", 0));
         color_fresh.setStrokeWidth(strokeWidth);
     }
 

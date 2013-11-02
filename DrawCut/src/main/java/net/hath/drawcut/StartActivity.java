@@ -38,7 +38,8 @@ public class StartActivity extends Activity implements GestureProvider{
         gestures.add(new GestureItem(null, "martin"));
 
         SharedPreferences.Editor preferences = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
-        preferences.putInt("gestureColor", R.color.drawing_color);
+        preferences.putInt("gestureColor", getResources().getColor(R.color.drawing_color));
+        preferences.putInt("gestureColorFresh", getResources().getColor(R.color.drawing_color_fresh));
         preferences.putFloat("gestureStrokeWidth", 10f);
         preferences.apply();
 
@@ -72,9 +73,10 @@ public class StartActivity extends Activity implements GestureProvider{
             GestureItem gi = new GestureItem(g, name);
 
             SharedPreferences prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE);
+
             Bitmap b = GestureUtil.toBitmap(g, prefs.getInt("gestureColor", 0), prefs.getFloat("gestureStrokeWidth", 1));
 
-            Utils.saveBitmapToFile(""+gestures.size(), b);
+            //Utils.saveBitmapToFile(""+gestures.size(), b);
 
             gi.setImage(b);
 
@@ -110,7 +112,6 @@ public class StartActivity extends Activity implements GestureProvider{
         for(GestureSubscriber s:subscribers){
             s.update();
         }
-        Log.d(TAG, gestures.toString());
     }
 
     @Override
