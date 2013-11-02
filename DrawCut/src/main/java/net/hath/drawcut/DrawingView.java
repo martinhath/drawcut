@@ -7,6 +7,8 @@ import android.gesture.GesturePoint;
 import android.gesture.GestureStroke;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,7 +26,8 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
 
     ArrayList<GesturePoint> points = new ArrayList<GesturePoint>();
     ArrayList<GesturePoint> points_old = new ArrayList<GesturePoint>();
-    List<GestureStroke> strokes = new LinkedList<GestureStroke>();
+
+    List<GestureStroke> gestureStrokes = new LinkedList<GestureStroke>();
 
     private Paint color;
     private Paint color_fresh;
@@ -64,19 +67,18 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
     public void clear() {
         points.clear();
         points_old.clear();
-        strokes.clear();
+        gestureStrokes.clear();
         invalidate();
     }
 
     /**
-     * Adds the current GesturePoint List to the Strokelist.
+     * Creates a GestureStroke from the GesturePoints in points.
+     * Adds this to StrokeList.
      */
     public void commit() {
         if (points.size() == 0) return;
         GestureStroke gs = new GestureStroke(points);
-        strokes.add(gs);
-        points_old.addAll(points);
-        points_old.add(null);
+        gestureStrokes.add(gs);
         points.clear();
         invalidate();
     }
@@ -93,42 +95,20 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        // Draw old stroke
-        if (!(points_old.size() < 1)) {
-            GesturePoint p0;
-            GesturePoint p1 = points_old.get(0);
-            canvas.drawCircle(p1.x, p1.y, strokeWidth / 2, color);
-            for (int i = 1; i < points_old.size(); i++) {
-                p0 = p1;
-                p1 = points_old.get(i);
-                // p1 == null means the user has released, and is drawing again.
-                // which means that we shouldn't draw a line
-                if (p0 == null) {
-                } else {
-                    if (p1 == null) {
-                        canvas.drawCircle(p0.x, p0.y, strokeWidth / 2, color);
-                    } else {
-                        // Ingen er nulls
-                        canvas.drawLine(p0.x, p0.y, p1.x, p1.y, color);
-                    }
-                }
-            }
+        for (GestureStroke stroke : gestureStrokes) {
+            RectF bounds = stroke.boundingBox;
+            Path p = stroke.toPath(bounds.width(), bounds.height(), stroke.points.length);
+            p.offset(bounds.left, bounds.top);
+            canvas.drawPath(p, color);
         }
-        // Draw current stroke
+
+
         if (points.size() < 1) return;
-        GesturePoint p0;
-        GesturePoint p1 = points.get(0);
-        canvas.drawCircle(p1.x, p1.y, strokeWidth / 2, color_fresh);
-        for (int i = 1; i < points.size(); i++) {
-            p0 = p1;
-            p1 = points.get(i);
-            // p1 == null means the user has released, and is drawing again.
-            // which means that we shouldn't draw a line
-            if (p0 == null || p1 == null) {
-                continue;
-            }
-            canvas.drawLine(p0.x, p0.y, p1.x, p1.y, color_fresh);
-        }
+        GestureStroke current = new GestureStroke(points);
+        RectF bounds = current.boundingBox;
+        Path p = current.toPath(bounds.width(), bounds.height(), current.points.length);
+        p.offset(bounds.left, bounds.top);
+        canvas.drawPath(p, color_fresh);
     }
 
     @Override
@@ -138,7 +118,7 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
                 commit();
                 break;
             default:
-                GesturePoint p = new GesturePoint(motionEvent.getX(), motionEvent.getY(), 500);
+                GesturePoint p = new GesturePoint(motionEvent.getX(), motionEvent.getY(), 0);
                 points.add(p);
                 invalidate();
         }

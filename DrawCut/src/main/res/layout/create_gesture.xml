@@ -1,44 +1,60 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/fragment_container"
-                android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_large"
+            android:paddingRight="@dimen/margin_large"
+            android:paddingTop="@dimen/margin_large"
+            android:paddingBottom="@dimen/margin_large"
+            tools:context=".StartActivity$PlaceholderFragment"
+            >
+
+        <net.hath.drawcut.DrawingView
+                android:id="@+id/drawsurface"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/margin_large"
-                android:paddingRight="@dimen/margin_large"
-                android:paddingTop="@dimen/margin_large"
-                android:paddingBottom="@dimen/margin_large"
-                tools:context=".StartActivity$PlaceholderFragment"
-                android:background="@color/white">
+                android:layout_width="match_parent"
+                android:clickable="true"
+                android:background="@drawable/white_box"
+                android:layout_below="@+id/header"
+                android:layout_alignParentLeft="true"/>
 
-    <net.hath.drawcut.DrawingView
-            android:id="@+id/drawsurface"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:clickable="true"
-            android:background="@drawable/white_box"
-            android:layout_below="@+id/header"
-            android:layout_alignParentLeft="true"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create_gesture"
+                android:id="@+id/header"
+                android:textSize="@dimen/text_large"
+                android:textColor="@color/grey_dark"
+                android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/margin_small"
+                android:layout_alignParentLeft="true"/>
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/create_gesture"
-            android:id="@+id/header"
-            android:textSize="@dimen/text_large"
-            android:textColor="@color/grey_dark"
-            android:layout_alignParentTop="true"
-            android:layout_margin="@dimen/margin_small"
-            android:layout_alignParentLeft="true"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nameForm"
+                android:hint="@string/name"
+                android:layout_below="@+id/drawsurface"
+                android:layout_marginTop="@dimen/margin_small"
+                android:maxLines="1"
+                android:inputType="textNoSuggestions"/>
 
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/nameForm"
-            android:hint="@string/name"
-            android:layout_below="@+id/drawsurface"
-            android:layout_marginTop="@dimen/margin_small"
-            android:maxLines="1"
-            android:inputType="textNoSuggestions"/>
+        <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/button"
+                android:layout_below="@+id/nameForm"
+                android:layout_alignParentLeft="true"/>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
+
+

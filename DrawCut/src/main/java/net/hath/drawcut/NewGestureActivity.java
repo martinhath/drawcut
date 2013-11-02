@@ -4,11 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureStroke;
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,6 +19,9 @@ public class NewGestureActivity extends Activity {
     TextView header;
     DrawingView drawingView;
     EditText formName;
+
+    Button button;
+    Intent intent;
 
     Gesture gesture;
 
@@ -37,15 +41,22 @@ public class NewGestureActivity extends Activity {
         assert font != null;
         header.setTypeface(font);
 
+        button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(Intent.ACTION_MAIN);
+            }
+        });
 
-        //noinspection ConstantConditions
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+                //noinspection ConstantConditions
+                getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
     public void saveGesture(){
         Gesture g = new Gesture();
-        for(GestureStroke gs: drawingView.strokes){
+        for(GestureStroke gs: drawingView.gestureStrokes){
             g.addStroke(gs);
         }
         gesture = g;
@@ -54,12 +65,15 @@ public class NewGestureActivity extends Activity {
 
         data.putExtra("gesture", gesture);
 
-        String name = String.valueOf(formName.getText());
+        String name = formName.getText().toString();
+        //String appName = formAppName.getText().toString();
         // TODO: Remove when launch
         name = name.equals("")?String.valueOf(formName.hashCode()):name;
         // END_TODO
 
         data.putExtra("name", name);
+        data.putExtra("intent", intent);
+
 
         setResult(RESULT_OK, data);
         setResult(RESULT_OK, data);

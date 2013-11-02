@@ -45,7 +45,7 @@ public class DrawingFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 drawingView.commit();
-                Gesture g = drawingView.makeGesture(drawingView.strokes);
+                Gesture g = drawingView.makeGesture(drawingView.gestureStrokes);
                 Bitmap b = g.toBitmap(198, 198, 0, Color.WHITE);
 
                 gl.addGesture(c++ + "", g);
@@ -70,7 +70,7 @@ public class DrawingFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 drawingView.commit();
-                Gesture g = drawingView.makeGesture(drawingView.strokes);
+                Gesture g = drawingView.makeGesture(drawingView.gestureStrokes);
 
                 ArrayList<Prediction> preds = gl.recognize(g);
                 Log.d(TAG, "Gjettinger:");

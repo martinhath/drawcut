@@ -19,6 +19,7 @@ public class GestureListAdapter extends ArrayAdapter<GestureItem> {
         super(context, resource, objects);
         inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         setNotifyOnChange(true);
+
     }
 
     @Override
@@ -36,8 +37,13 @@ public class GestureListAdapter extends ArrayAdapter<GestureItem> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        String name = getItem(position).getName();
-        holder.name.setText(position+name);
+        GestureItem gesture = getItem(position);
+
+        String name = gesture.getName();
+
+        holder.name.setText(name);
+
+        //holder.app.setText(gesture.getAppName());
 
 
         holder.image.setImageBitmap(getItem(position).getImage());
