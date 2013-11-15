@@ -12,5 +12,6 @@
     <!-- Dummy strings for development -->
     <string name="dummy_name">Gesture name</string>
     <string name="dummy_app">Snapchat</string>
+    <string name="title_pick_activity">Choose an app</string>
 
 </resources>

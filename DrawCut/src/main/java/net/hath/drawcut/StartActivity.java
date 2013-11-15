@@ -1,6 +1,7 @@
 package net.hath.drawcut;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +46,17 @@ public class StartActivity extends Activity implements GestureProvider{
         preferences.putFloat("gestureStrokeWidth", 10f);
         preferences.apply();
 
+
+
+        Button btn = (Button) findViewById(R.id.testbutton);
+        View.OnClickListener l = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment dialogFragment = new ApplicationPickerDialog();
+                dialogFragment.show(getFragmentManager(), "123");
+            }
+        };
+        btn.setOnClickListener(l);
 
     }
 
