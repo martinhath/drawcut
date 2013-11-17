@@ -113,6 +113,7 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
+        getParent().requestDisallowInterceptTouchEvent(true);
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_UP:
                 commit();

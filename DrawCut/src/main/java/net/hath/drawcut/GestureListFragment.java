@@ -3,6 +3,7 @@ package net.hath.drawcut;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,7 +57,11 @@ public class GestureListFragment extends Fragment implements GestureSubscriber{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(items.get(i).getIntent());
+                PackageManager pm = getActivity().getPackageManager();
+                GestureItem gi = items.get(i);
+                Intent intent = pm.getLaunchIntentForPackage(gi.getApp().getPackageName());
+                if(intent == null) return; // Will probably have to filter out these in a way.
+                startActivity(intent);
             }
         });
 

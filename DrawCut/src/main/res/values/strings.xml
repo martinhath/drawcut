@@ -17,5 +17,6 @@
     <string name="select">Select</string>
     <string name="click_app_select">Click to select an app</string>
     <string name="desc_touch_to_set_app">Touch the icon to select an app</string>
+    <string name="launch_app">Launch an app</string>
 
 </resources>

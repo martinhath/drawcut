@@ -1,6 +1,5 @@
 package net.hath.drawcut;
 
-import android.content.Intent;
 import android.gesture.Gesture;
 import android.graphics.Bitmap;
 
@@ -8,7 +7,6 @@ public class GestureItem {
     private String name;
     private Gesture gesture;
     private Bitmap image;
-    private Intent intent;
     private ApplicationItem app;
 
     public GestureItem(Gesture g, String n) {
@@ -34,14 +32,6 @@ public class GestureItem {
 
     public Gesture getGesture() {
         return gesture;
-    }
-
-    public Intent getIntent() {
-        return intent;
-    }
-
-    public void setIntent(Intent intent) {
-        this.intent = intent;
     }
 
     public ApplicationItem getApp() {

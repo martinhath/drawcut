@@ -1,19 +1,19 @@
 package net.hath.drawcut;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.content.pm.ActivityInfo;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ApplicationPickerDialog extends DialogFragment {
@@ -36,17 +36,22 @@ public class ApplicationPickerDialog extends DialogFragment {
             }
         });
 
-        builder.setNegativeButton(R.string.abort, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-
         List<ApplicationInfo> items = getActivity().getPackageManager()
                 .getInstalledApplications(PackageManager.GET_META_DATA);
+        if (items == null) {
+            throw new NullPointerException();
+        }
+        List<ApplicationInfo> filteredItems = new ArrayList<ApplicationInfo>();
+        PackageManager pm = getActivity().getPackageManager();
+        for (ApplicationInfo ai : items) {
+            Intent i = pm.getLaunchIntentForPackage(ai.packageName);
+            if (i != null) {
+                filteredItems.add(ai);
+            }
+        }
+        Collections.sort(filteredItems, new ApplicationInfoComparator(pm));
         GridView gw = (GridView) view.findViewById(R.id.application_grid);
-        gw.setAdapter(new ApplicationAdapter(getActivity(), R.layout.application_item, R.id.app_name, items));
+        gw.setAdapter(new ApplicationAdapter(getActivity(), R.layout.application_item, R.id.app_name, filteredItems));
 
         return builder.create();
     }

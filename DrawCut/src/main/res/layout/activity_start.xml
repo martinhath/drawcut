@@ -1,8 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
+    android:divider="@android:drawable/divider_horizontal_bright"
+    android:dividerPadding="@dimen/margin_small"
+    android:showDividers="middle"
     tools:context=".StartActivity"
     tools:ignore="MergeRootFrame" >
 
@@ -10,7 +14,18 @@
         android:layout_height="match_parent"
         android:id="@+id/container"
         android:layout_width="match_parent"
-        />
+        android:layout_weight="1">
+    </RelativeLayout>
+
+    <Button
+            android:id="@+id/button_launch"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/launch_app"
+            android:background="?android:attr/selectableItemBackground"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.Button"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"/>
 
 
-</RelativeLayout>
+</LinearLayout>

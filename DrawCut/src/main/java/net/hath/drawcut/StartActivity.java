@@ -71,11 +71,9 @@ public class StartActivity extends Activity implements GestureProvider{
         if(resultCode == RESULT_OK){
             Gesture g = data.getParcelableExtra("gesture");
             String name = data.getStringExtra("name");
-            Intent i = data.getParcelableExtra("intent");
             ApplicationItem ai = new ApplicationItem(this, (ApplicationInfo) data.getParcelableExtra("applicationinfo"));
 
             GestureItem gi = new GestureItem(g, name);
-            gi.setIntent(i);
             gi.setApplicationItem(ai);
 
             SharedPreferences prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE);
