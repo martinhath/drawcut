@@ -6,6 +6,7 @@ import android.gesture.Gesture;
 import android.gesture.GestureStroke;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,17 +56,25 @@ public class NewGestureActivity extends Activity {
 
 
     public void saveGesture(){
+
         Gesture g = new Gesture();
         for(GestureStroke gs: drawingView.gestureStrokes){
             g.addStroke(gs);
         }
         gesture = g;
-        // Prepares the gesture for returning to prev. activity.
+
+        if(gesture.getStrokesCount() == 0){
+            setResult(RESULT_CANCELED);
+            return;
+        }
+
+
         Intent data = new Intent();
 
         data.putExtra("gesture", gesture);
 
         String name = formName.getText().toString();
+
         //String appName = formAppName.getText().toString();
         // TODO: Remove when launch
         name = name.equals("")?String.valueOf(formName.hashCode()):name;
@@ -74,8 +83,6 @@ public class NewGestureActivity extends Activity {
         data.putExtra("name", name);
         data.putExtra("intent", intent);
 
-
-        setResult(RESULT_OK, data);
         setResult(RESULT_OK, data);
     }
 

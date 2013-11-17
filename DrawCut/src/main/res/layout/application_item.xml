@@ -9,6 +9,7 @@
             android:layout_height="wrap_content"
             android:text="@string/dummy_app"
             android:layout_below="@+id/app_icon"
+            android:minLines="2"
             android:maxLines="2"
             android:ellipsize="marquee"
             android:layout_alignParentLeft="false"
