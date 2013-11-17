@@ -38,25 +38,12 @@ public class StartActivity extends Activity implements GestureProvider{
         subscribers = new ArrayList<GestureSubscriber>();
         // Skal laste fra DB.
         gestures = new ArrayList<GestureItem>();
-        gestures.add(new GestureItem(null, "martin"));
 
         SharedPreferences.Editor preferences = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
         preferences.putInt("gestureColor", getResources().getColor(R.color.drawing_color));
         preferences.putInt("gestureColorFresh", getResources().getColor(R.color.drawing_color_fresh));
         preferences.putFloat("gestureStrokeWidth", 10f);
         preferences.apply();
-
-
-
-        Button btn = (Button) findViewById(R.id.testbutton);
-        View.OnClickListener l = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DialogFragment dialogFragment = new ApplicationPickerDialog();
-                dialogFragment.show(getFragmentManager(), "123");
-            }
-        };
-        btn.setOnClickListener(l);
 
     }
 

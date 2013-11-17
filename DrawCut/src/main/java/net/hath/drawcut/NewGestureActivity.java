@@ -1,7 +1,10 @@
 package net.hath.drawcut;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.gesture.Gesture;
 import android.gesture.GestureStroke;
 import android.graphics.Typeface;
@@ -26,11 +29,14 @@ public class NewGestureActivity extends Activity {
 
     Gesture gesture;
 
+    ApplicationInfo application;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.create_gesture);
+        application = null;
 
 
         drawingView = (DrawingView) findViewById(R.id.drawsurface);
@@ -46,7 +52,8 @@ public class NewGestureActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent = new Intent(Intent.ACTION_MAIN);
+                DialogFragment dialogFragment = new ApplicationPickerDialog();
+                dialogFragment.show(getFragmentManager(), "123");
             }
         });
 
@@ -116,5 +123,9 @@ public class NewGestureActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setSelectedActivity(ApplicationInfo applicationInfo) {
+        application = applicationInfo;
     }
 }
