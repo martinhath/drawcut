@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class NewGestureActivity extends Activity {
@@ -23,6 +24,9 @@ public class NewGestureActivity extends Activity {
     TextView header;
     DrawingView drawingView;
     EditText formName;
+
+    TextView appname;
+    ImageView appicon;
 
     Button button;
     Intent intent;
@@ -41,6 +45,9 @@ public class NewGestureActivity extends Activity {
 
         drawingView = (DrawingView) findViewById(R.id.drawsurface);
         formName = (EditText) findViewById(R.id.nameForm);
+
+        appname = (TextView) findViewById(R.id.name);
+        appicon = (ImageView) findViewById(R.id.icon);
 
 
         header = (TextView) findViewById(R.id.header);
@@ -127,5 +134,7 @@ public class NewGestureActivity extends Activity {
 
     public void setSelectedActivity(ApplicationInfo applicationInfo) {
         application = applicationInfo;
+        appname.setText(getPackageManager().getApplicationLabel(application));
+        appicon.setImageDrawable(getPackageManager().getApplicationIcon(application));
     }
 }

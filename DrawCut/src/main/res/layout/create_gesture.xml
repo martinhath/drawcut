@@ -53,6 +53,25 @@
                 android:layout_below="@+id/nameForm"
                 android:layout_alignParentLeft="true"/>
 
+        <ImageView
+                android:layout_width="@android:dimen/app_icon_size"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:src="@drawable/dummy_icon"
+                android:id="@+id/icon"
+                android:layout_below="@+id/nameForm"
+                android:layout_toRightOf="@+id/button"
+                android:padding="@dimen/margin_small"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@android:dimen/app_icon_size"
+                android:id="@+id/name"
+                android:gravity="center_vertical"
+                android:text="@string/dummy_app"
+                android:layout_below="@+id/nameForm"
+                android:layout_toRightOf="@+id/icon"
+                android:padding="@dimen/margin_small"/>
+
 
     </RelativeLayout>
 </ScrollView>
