@@ -23,7 +23,8 @@
             android:layout_height="fill_parent"
             android:layout_alignBottom="@+id/image"
             android:layout_toRightOf="@+id/image"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:layout_weight="1">
 
         <TextView
                 android:layout_width="wrap_content"
@@ -39,10 +40,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/dummy_app"
                 android:textSize="@dimen/text_small"
-                android:id="@+id/application"
+                android:id="@+id/package_name"
                 android:layout_below="@+id/name"
                 android:layout_toRightOf="@+id/image"
                 android:layout_centerVertical="true"/>
     </LinearLayout>
+
+    <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/icon"
+            android:src="@drawable/dummy_icon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/margin_small"
+            />
 
 </LinearLayout>

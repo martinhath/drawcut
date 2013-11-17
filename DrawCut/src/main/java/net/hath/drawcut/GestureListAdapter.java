@@ -1,7 +1,6 @@
 package net.hath.drawcut;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,8 @@ public class GestureListAdapter extends ArrayAdapter<GestureItem> {
             holder = new ViewHolder();
             holder.image = (ImageView) convertView.findViewById(R.id.image);
             holder.name = (TextView) convertView.findViewById(R.id.name);
-            holder.app = (TextView) convertView.findViewById(R.id.application);
+            holder.app = (TextView) convertView.findViewById(R.id.package_name);
+            holder.icon = (ImageView) convertView.findViewById(R.id.icon);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -43,8 +43,11 @@ public class GestureListAdapter extends ArrayAdapter<GestureItem> {
 
         holder.name.setText(name);
 
-        //holder.app.setText(gesture.getAppName());
+        ApplicationItem app = gesture.getApp();
 
+        holder.app.setText(app.getPackageName());
+
+        holder.icon.setImageDrawable(app.getIcon());
 
         holder.image.setImageBitmap(getItem(position).getImage());
 
@@ -53,6 +56,7 @@ public class GestureListAdapter extends ArrayAdapter<GestureItem> {
 
     static class ViewHolder {
         ImageView image;
+        ImageView icon;
         TextView name;
         TextView app;
     }

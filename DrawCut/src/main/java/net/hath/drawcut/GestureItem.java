@@ -9,6 +9,7 @@ public class GestureItem {
     private Gesture gesture;
     private Bitmap image;
     private Intent intent;
+    private ApplicationItem app;
 
     public GestureItem(Gesture g, String n) {
         gesture = g;
@@ -41,5 +42,13 @@ public class GestureItem {
 
     public void setIntent(Intent intent) {
         this.intent = intent;
+    }
+
+    public ApplicationItem getApp() {
+        return app;
+    }
+
+    public void setApplicationItem(ApplicationItem ai) {
+        app = ai;
     }
 }

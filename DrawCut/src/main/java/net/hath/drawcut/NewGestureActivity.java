@@ -90,6 +90,7 @@ public class NewGestureActivity extends Activity {
 
         data.putExtra("name", name);
         data.putExtra("intent", intent);
+        data.putExtra("applicationinfo", application);
 
         setResult(RESULT_OK, data);
     }

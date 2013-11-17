@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.gesture.Gesture;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -71,9 +72,11 @@ public class StartActivity extends Activity implements GestureProvider{
             Gesture g = data.getParcelableExtra("gesture");
             String name = data.getStringExtra("name");
             Intent i = data.getParcelableExtra("intent");
+            ApplicationItem ai = new ApplicationItem(this, (ApplicationInfo) data.getParcelableExtra("applicationinfo"));
 
             GestureItem gi = new GestureItem(g, name);
             gi.setIntent(i);
+            gi.setApplicationItem(ai);
 
             SharedPreferences prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE);
 
