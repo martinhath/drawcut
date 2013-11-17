@@ -31,46 +31,50 @@
                 android:textSize="@dimen/text_large"
                 android:textColor="@color/grey_dark"
                 android:layout_alignParentTop="true"
-                android:layout_margin="@dimen/margin_small"
                 android:layout_alignParentLeft="true"/>
-
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/nameForm"
-                android:hint="@string/name"
-                android:layout_below="@+id/drawsurface"
-                android:layout_marginTop="@dimen/margin_small"
-                android:maxLines="1"
-                android:inputType="textNoSuggestions"/>
-
-        <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button"
-                android:layout_below="@+id/nameForm"
-                android:layout_alignParentLeft="true"/>
-
-        <ImageView
-                android:layout_width="@android:dimen/app_icon_size"
-                android:layout_height="@android:dimen/app_icon_size"
-                android:src="@drawable/dummy_icon"
-                android:id="@+id/icon"
-                android:layout_below="@+id/nameForm"
-                android:layout_toRightOf="@+id/button"
-                android:padding="@dimen/margin_small"/>
 
         <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="@android:dimen/app_icon_size"
-                android:id="@+id/name"
-                android:gravity="center_vertical"
-                android:text="@string/dummy_app"
-                android:layout_below="@+id/nameForm"
-                android:layout_toRightOf="@+id/icon"
-                android:padding="@dimen/margin_small"/>
+                android:layout_height="wrap_content"
+                android:text="@string/desc_touch_to_set_app"
+                android:id="@+id/subheader"
+                android:textSize="@dimen/text_medium"
+                android:textColor="@color/grey_dark"
+                android:paddingTop="@dimen/margin_large"
+                android:layout_below="@+id/drawsurface"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="@dimen/margin_medium"/>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:divider="@color/grey_dark"
+                android:showDividers="middle"
+                android:layout_below="@+id/subheader"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_alignParentLeft="true">
+
+            <ImageView
+                    android:layout_width="@dimen/app_icon_padded"
+                    android:layout_height="@dimen/app_icon_padded"
+                    android:id="@+id/icon"
+                    android:gravity="center_vertical"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@drawable/dummy_icon"
+                    android:padding="@dimen/margin_medium"/>
+
+            <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nameForm"
+                    android:hint="@string/name"
+                    android:maxLines="1"
+                    android:inputType="textNoSuggestions"
+                    />
+        </LinearLayout>
 
 
     </RelativeLayout>

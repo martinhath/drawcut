@@ -3,17 +3,16 @@ package net.hath.drawcut;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.gesture.Gesture;
 import android.gesture.GestureStroke;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,15 +23,9 @@ public class NewGestureActivity extends Activity {
     TextView header;
     DrawingView drawingView;
     EditText formName;
-
-    TextView appname;
     ImageView appicon;
-
-    Button button;
     Intent intent;
-
     Gesture gesture;
-
     ApplicationInfo application;
 
     @Override
@@ -46,38 +39,39 @@ public class NewGestureActivity extends Activity {
         drawingView = (DrawingView) findViewById(R.id.drawsurface);
         formName = (EditText) findViewById(R.id.nameForm);
 
-        appname = (TextView) findViewById(R.id.name);
         appicon = (ImageView) findViewById(R.id.icon);
 
 
         header = (TextView) findViewById(R.id.header);
+        TextView subheader = (TextView) findViewById(R.id.subheader);
+
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/roboto-li.ttf");
         assert font != null;
         header.setTypeface(font);
+        subheader.setTypeface(font);
 
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        appicon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 DialogFragment dialogFragment = new ApplicationPickerDialog();
                 dialogFragment.show(getFragmentManager(), "123");
             }
         });
 
-                //noinspection ConstantConditions
-                getActionBar().setDisplayHomeAsUpEnabled(true);
+        //noinspection ConstantConditions
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-
-    public void saveGesture(){
+    public void saveGesture() {
 
         Gesture g = new Gesture();
-        for(GestureStroke gs: drawingView.gestureStrokes){
+        for (GestureStroke gs : drawingView.gestureStrokes) {
             g.addStroke(gs);
         }
         gesture = g;
 
-        if(gesture.getStrokesCount() == 0){
+        if (gesture.getStrokesCount() == 0) {
             setResult(RESULT_CANCELED);
             return;
         }
@@ -91,7 +85,7 @@ public class NewGestureActivity extends Activity {
 
         //String appName = formAppName.getText().toString();
         // TODO: Remove when launch
-        name = name.equals("")?String.valueOf(formName.hashCode()):name;
+        name = name.equals("") ? String.valueOf(formName.hashCode()) : name;
         // END_TODO
 
         data.putExtra("name", name);
@@ -134,7 +128,9 @@ public class NewGestureActivity extends Activity {
 
     public void setSelectedActivity(ApplicationInfo applicationInfo) {
         application = applicationInfo;
-        appname.setText(getPackageManager().getApplicationLabel(application));
-        appicon.setImageDrawable(getPackageManager().getApplicationIcon(application));
+        PackageManager pm = getPackageManager();
+        formName.setText(pm.getApplicationLabel(application));
+        Drawable d = pm.getApplicationIcon(applicationInfo);
+        appicon.setImageDrawable(d);
     }
 }

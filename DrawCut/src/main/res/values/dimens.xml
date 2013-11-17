@@ -9,8 +9,6 @@
     <dimen name="margin_medium">8dp</dimen>
     <dimen name="margin_large">16dp</dimen>
 
-    <dimen name="default_height">48dp</dimen>
-    <dimen name="xlarge_height">240dp</dimen>
-    <dimen name="icon_height">32dp</dimen>
-    <dimen name="image_height">192dp</dimen>
+    <dimen name="app_icon">48dp</dimen>
+    <dimen name="app_icon_padded">64dp</dimen>
 </resources>
