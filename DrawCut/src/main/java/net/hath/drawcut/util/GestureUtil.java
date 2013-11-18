@@ -1,4 +1,4 @@
-package net.hath.drawcut;
+package net.hath.drawcut.util;
 
 import android.gesture.Gesture;
 import android.gesture.GestureStroke;

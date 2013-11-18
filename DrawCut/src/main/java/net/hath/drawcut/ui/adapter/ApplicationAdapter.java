@@ -1,4 +1,4 @@
-package net.hath.drawcut;
+package net.hath.drawcut.ui.adapter;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import net.hath.drawcut.R;
 
 import java.util.List;
 

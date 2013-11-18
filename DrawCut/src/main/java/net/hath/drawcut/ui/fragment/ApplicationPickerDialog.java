@@ -1,9 +1,8 @@
-package net.hath.drawcut;
+package net.hath.drawcut.ui.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -11,6 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import net.hath.drawcut.util.ApplicationInfoComparator;
+import net.hath.drawcut.R;
+import net.hath.drawcut.ui.activitiy.NewGestureActivity;
+import net.hath.drawcut.ui.adapter.ApplicationAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;

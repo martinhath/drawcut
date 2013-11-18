@@ -1,4 +1,4 @@
-package net.hath.drawcut;
+package net.hath.drawcut.data;
 
 import java.util.List;
 

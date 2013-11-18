@@ -10,7 +10,7 @@
                 tools:context=".StartActivity$PlaceholderFragment"
                 android:background="@color/white">
 
-<net.hath.drawcut.DrawingView
+<net.hath.drawcut.view.DrawingView
     android:id="@+id/drawsurface"
     android:layout_height="match_parent"
     android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package net.hath.drawcut;
+package net.hath.drawcut.view;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,10 +24,10 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
 
     private Context context;
 
-    ArrayList<GesturePoint> points = new ArrayList<GesturePoint>();
-    ArrayList<GesturePoint> points_old = new ArrayList<GesturePoint>();
+    private ArrayList<GesturePoint> points = new ArrayList<GesturePoint>();
+    private ArrayList<GesturePoint> points_old = new ArrayList<GesturePoint>();
 
-    List<GestureStroke> gestureStrokes = new LinkedList<GestureStroke>();
+    private List<GestureStroke> gestureStrokes = new LinkedList<GestureStroke>();
 
     private Paint color;
     private Paint color_fresh;
@@ -109,6 +109,10 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         Path p = current.toPath(bounds.width(), bounds.height(), current.points.length);
         p.offset(bounds.left, bounds.top);
         canvas.drawPath(p, color_fresh);
+    }
+
+    public List<GestureStroke> getGestureStrokes() {
+        return gestureStrokes;
     }
 
     @Override

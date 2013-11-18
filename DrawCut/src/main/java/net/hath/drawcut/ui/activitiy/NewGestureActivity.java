@@ -1,4 +1,4 @@
-package net.hath.drawcut;
+package net.hath.drawcut.ui.activitiy;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -16,6 +16,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import net.hath.drawcut.ui.fragment.ApplicationPickerDialog;
+import net.hath.drawcut.view.DrawingView;
+import net.hath.drawcut.R;
 
 public class NewGestureActivity extends Activity {
 
@@ -66,7 +69,7 @@ public class NewGestureActivity extends Activity {
     public void saveGesture() {
 
         Gesture g = new Gesture();
-        for (GestureStroke gs : drawingView.gestureStrokes) {
+        for (GestureStroke gs : drawingView.getGestureStrokes()) {
             g.addStroke(gs);
         }
         gesture = g;

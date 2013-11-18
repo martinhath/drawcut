@@ -1,7 +1,6 @@
-package net.hath.drawcut;
+package net.hath.drawcut.ui.activitiy;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,13 +11,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import net.hath.drawcut.*;
+import net.hath.drawcut.data.ApplicationItem;
+import net.hath.drawcut.data.GestureItem;
+import net.hath.drawcut.data.GestureProvider;
+import net.hath.drawcut.data.GestureSubscriber;
+import net.hath.drawcut.ui.fragment.GestureListFragment;
+import net.hath.drawcut.util.GestureUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartActivity extends Activity implements GestureProvider{
+public class StartActivity extends Activity implements GestureProvider {
     private static final String TAG = "StartActivity";
     private List<GestureSubscriber> subscribers;
 

@@ -1,4 +1,4 @@
-package net.hath.drawcut;
+package net.hath.drawcut.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -11,11 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import net.hath.drawcut.*;
+import net.hath.drawcut.data.GestureItem;
+import net.hath.drawcut.data.GestureProvider;
+import net.hath.drawcut.data.GestureSubscriber;
+import net.hath.drawcut.ui.adapter.GestureListAdapter;
 
 import java.util.List;
 
 
-public class GestureListFragment extends Fragment implements GestureSubscriber{
+public class GestureListFragment extends Fragment implements GestureSubscriber {
     private static final String TAG = "GestureListFragment";
     GestureProvider provider;
 

@@ -1,4 +1,4 @@
-package net.hath.drawcut;
+package net.hath.drawcut.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

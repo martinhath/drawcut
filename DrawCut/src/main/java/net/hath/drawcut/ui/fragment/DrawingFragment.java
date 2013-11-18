@@ -1,4 +1,4 @@
-package net.hath.drawcut;
+package net.hath.drawcut.ui.fragment;
 
 import android.app.Fragment;
 import android.gesture.Gesture;
@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import net.hath.drawcut.view.DrawingView;
+import net.hath.drawcut.R;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ public class DrawingFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 drawingView.commit();
-                Gesture g = drawingView.makeGesture(drawingView.gestureStrokes);
+                Gesture g = drawingView.makeGesture(drawingView.getGestureStrokes());
                 Bitmap b = g.toBitmap(198, 198, 0, Color.WHITE);
 
                 gl.addGesture(c++ + "", g);
@@ -70,7 +72,7 @@ public class DrawingFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 drawingView.commit();
-                Gesture g = drawingView.makeGesture(drawingView.gestureStrokes);
+                Gesture g = drawingView.makeGesture(drawingView.getGestureStrokes());
 
                 ArrayList<Prediction> preds = gl.recognize(g);
                 Log.d(TAG, "Gjettinger:");
