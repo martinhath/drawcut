@@ -7,28 +7,32 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.gesture.Gesture;
+import android.gesture.GestureStore;
+import android.gesture.Prediction;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import net.hath.drawcut.*;
+import net.hath.drawcut.R;
 import net.hath.drawcut.data.*;
 import net.hath.drawcut.ui.fragment.LaunchItemListFragment;
 import net.hath.drawcut.util.GestureUtil;
 import net.hath.drawcut.util.Utils;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StartActivity extends Activity implements LaunchItemProvider {
     private static final String TAG = "StartActivity";
     private List<LaunchItemSubscriber> subscribers;
-
     private Fragment content;
     private List<LaunchItem> launchItemList;
-
     private LaunchItemDatabaseManager databaseManager;
+    private GestureStore gestureStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +46,39 @@ public class StartActivity extends Activity implements LaunchItemProvider {
         }
 
         subscribers = new ArrayList<LaunchItemSubscriber>();
-        // Skal laste fra DB.
+
+
+        // ASYNC
+
+        gestureStore = new GestureStore();
+
+
+
+        try {
+            InputStream in = openFileInput("gestures");
+            gestureStore.load(in);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         launchItemList = new ArrayList<LaunchItem>();
-        Context context = getApplicationContext();
         databaseManager = new LaunchItemDatabaseManager(getApplicationContext());
         launchItemList = databaseManager.getLaunchItems();
+
+
+        for (LaunchItem li : launchItemList) {
+            List<Gesture> glist = gestureStore.getGestures(li.getName());
+            if(glist == null){
+                Log.d(TAG, "glist is null");
+                continue;
+            }
+            Gesture g = glist.get(0);
+            if (g != null) {
+                li.setGesture(g);
+            }
+        }
 
         SharedPreferences.Editor preferences = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
         preferences.putInt("gestureColor", getResources().getColor(R.color.drawing_color));
@@ -56,7 +87,6 @@ public class StartActivity extends Activity implements LaunchItemProvider {
         preferences.apply();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,7 +107,7 @@ public class StartActivity extends Activity implements LaunchItemProvider {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             Gesture g = data.getParcelableExtra("gesture");
             String name = data.getStringExtra("name");
             ApplicationItem ai = new ApplicationItem(this, (ApplicationInfo) data.getParcelableExtra("applicationinfo"));
@@ -88,7 +118,7 @@ public class StartActivity extends Activity implements LaunchItemProvider {
 
             Bitmap b = GestureUtil.toBitmap(g, prefs.getInt("gestureColor", 0), prefs.getFloat("gestureStrokeWidth", 1));
 
-            Utils.saveBitmapToFile(this, ""+gi.getId(), b);
+            Utils.saveBitmapToFile(this, "" + gi.getId(), b);
 
             gi.setGestureImage(b);
 
@@ -96,9 +126,19 @@ public class StartActivity extends Activity implements LaunchItemProvider {
 
             databaseManager.putLaunchItem(gi);
 
+
+            gestureStore.addGesture(name, g);
+            try {
+                gestureStore.save(openFileOutput("gestures", MODE_PRIVATE));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             Log.d(TAG, "Added Gesture. ");
 
-        }else{
+        } else {
             Log.w(TAG, "Failed to get result. ");
         }
     }
@@ -123,7 +163,7 @@ public class StartActivity extends Activity implements LaunchItemProvider {
     @Override
     public void addGesture(LaunchItem g) {
         launchItemList.add(g);
-        for(LaunchItemSubscriber s:subscribers){
+        for (LaunchItemSubscriber s : subscribers) {
             s.update();
         }
     }

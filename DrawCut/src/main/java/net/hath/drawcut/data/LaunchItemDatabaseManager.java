@@ -22,7 +22,6 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
     private static final String KEY_ID = "_id";
     private static final String KEY_NAME = "name";
     private static final String KEY_PACKAGE = "package";
-    private static final String KEY_GESTURE = "gesture";
     private Context context;
 
     public LaunchItemDatabaseManager(Context context){
@@ -36,8 +35,8 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_GESTURE_TABLE = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s BLOB)",
-                TABLE_LAUNCHITEM, KEY_ID, KEY_NAME, KEY_PACKAGE, KEY_GESTURE);
+        String CREATE_GESTURE_TABLE = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT)",
+                TABLE_LAUNCHITEM, KEY_ID, KEY_NAME, KEY_PACKAGE);
         db.execSQL(CREATE_GESTURE_TABLE);
     }
 
@@ -50,9 +49,6 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
     public void putLaunchItem(LaunchItem gi) {
         String name = gi.getName();
         String packageName = gi.getApplicationItem().getPackageName();
-        Gesture gesture = gi.getGesture();
-        Parcel p = Parcel.obtain();
-        gesture.writeToParcel(p, 0);
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -65,7 +61,6 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
         values.put(KEY_ID, gi.getId());
         values.put(KEY_NAME, name);
         values.put(KEY_PACKAGE, packageName);
-        values.put(KEY_GESTURE, p.createByteArray());
 
         db.insert(TABLE_LAUNCHITEM, null, values);
         db.close();
@@ -77,9 +72,6 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
         for(LaunchItem gi:list){
             String name = gi.getName();
             String packageName = gi.getApplicationItem().getPackageName();
-            Gesture gesture = gi.getGesture();
-            Parcel p = Parcel.obtain();
-            gesture.writeToParcel(p, 0);
 
             ContentValues values = new ContentValues();
 
@@ -91,7 +83,6 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
             values.put(KEY_ID, gi.getId());
             values.put(KEY_NAME, name);
             values.put(KEY_PACKAGE, packageName);
-            values.put(KEY_GESTURE, p.createByteArray());
 
             db.insert(TABLE_LAUNCHITEM, null, values);
         }
@@ -121,14 +112,9 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
             String name = cursor.getString(1);
             String packageName = cursor.getString(2);
 
-            byte[] gestureBArray = cursor.getBlob(3);
-            Parcel parcel = Parcel.obtain();
-            parcel.writeByteArray(gestureBArray);
-            Gesture g = Gesture.CREATOR.createFromParcel(parcel);
-
             ApplicationItem ai = ApplicationItem.createFromPackageName(context, packageName);
 
-            LaunchItem li = new LaunchItem(name, g, ai);
+            LaunchItem li = new LaunchItem(name, null, ai);
             li.setGestureImage(Utils.loadBitmapFromFile(context, ""+li.getId()));
             list.add(li);
         } while (cursor.moveToNext());
