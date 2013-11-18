@@ -1,5 +1,5 @@
 package net.hath.drawcut.data;
 
-public interface GestureSubscriber {
+public interface LaunchItemSubscriber {
     public void update();
 }

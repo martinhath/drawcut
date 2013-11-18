@@ -1,8 +1,15 @@
 package net.hath.drawcut.data;
 
 
-import android.gesture.GestureStore;
+public class GestureLibrary extends android.gesture.GestureLibrary {
 
-public class GestureLibrary extends GestureStore {
+    @Override
+    public boolean save() {
+        return false;
+    }
 
+    @Override
+    public boolean load() {
+        return false;
+    }
 }

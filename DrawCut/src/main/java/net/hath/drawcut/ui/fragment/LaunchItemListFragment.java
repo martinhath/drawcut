@@ -12,38 +12,38 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import net.hath.drawcut.*;
-import net.hath.drawcut.data.GestureItem;
-import net.hath.drawcut.data.GestureProvider;
-import net.hath.drawcut.data.GestureSubscriber;
+import net.hath.drawcut.data.LaunchItem;
+import net.hath.drawcut.data.LaunchItemProvider;
+import net.hath.drawcut.data.LaunchItemSubscriber;
 import net.hath.drawcut.ui.adapter.GestureListAdapter;
 
 import java.util.List;
 
 
-public class GestureListFragment extends Fragment implements GestureSubscriber {
-    private static final String TAG = "GestureListFragment";
-    GestureProvider provider;
+public class LaunchItemListFragment extends Fragment implements LaunchItemSubscriber {
+    private static final String TAG = "LaunchItemListFragment";
+    LaunchItemProvider provider;
 
     public  ListView listView;
     private GestureListAdapter listAdapter;
-    private List<GestureItem> items;
+    private List<LaunchItem> items;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         try {
-            GestureProvider a = (GestureProvider) activity;
+            LaunchItemProvider a = (LaunchItemProvider) activity;
             provider = a;
             a.addSubscriber(this);
-            items = provider.getGestures();
+            items = provider.getLaunchItemList();
 
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement GestureProvider interface");
+            throw new ClassCastException(activity.toString() + " must implement LaunchItemProvider interface");
         }
     }
 
-    public void add(GestureItem item){
+    public void add(LaunchItem item){
         listAdapter.add(item);
     }
 
@@ -63,8 +63,8 @@ public class GestureListFragment extends Fragment implements GestureSubscriber {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 PackageManager pm = getActivity().getPackageManager();
-                GestureItem gi = items.get(i);
-                Intent intent = pm.getLaunchIntentForPackage(gi.getApp().getPackageName());
+                LaunchItem gi = items.get(i);
+                Intent intent = pm.getLaunchIntentForPackage(gi.getApplicationItem().getPackageName());
                 if(intent == null) return; // Will probably have to filter out these in a way.
                 startActivity(intent);
             }

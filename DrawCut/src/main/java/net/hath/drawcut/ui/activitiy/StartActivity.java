@@ -2,6 +2,7 @@ package net.hath.drawcut.ui.activitiy;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -12,22 +13,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import net.hath.drawcut.*;
-import net.hath.drawcut.data.ApplicationItem;
-import net.hath.drawcut.data.GestureItem;
-import net.hath.drawcut.data.GestureProvider;
-import net.hath.drawcut.data.GestureSubscriber;
-import net.hath.drawcut.ui.fragment.GestureListFragment;
+import net.hath.drawcut.data.*;
+import net.hath.drawcut.ui.fragment.LaunchItemListFragment;
 import net.hath.drawcut.util.GestureUtil;
+import net.hath.drawcut.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartActivity extends Activity implements GestureProvider {
+public class StartActivity extends Activity implements LaunchItemProvider {
     private static final String TAG = "StartActivity";
-    private List<GestureSubscriber> subscribers;
+    private List<LaunchItemSubscriber> subscribers;
 
     private Fragment content;
-    private List<GestureItem> gestures;
+    private List<LaunchItem> launchItemList;
+
+    private LaunchItemDatabaseManager databaseManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +36,18 @@ public class StartActivity extends Activity implements GestureProvider {
         setContentView(R.layout.activity_start);
 
         if (savedInstanceState == null) {
-            content = new GestureListFragment();
+            content = new LaunchItemListFragment();
             content.setHasOptionsMenu(true);
             getFragmentManager().beginTransaction().add(R.id.container, content).commit();
         }
 
-        subscribers = new ArrayList<GestureSubscriber>();
+        subscribers = new ArrayList<LaunchItemSubscriber>();
         // Skal laste fra DB.
-        gestures = new ArrayList<GestureItem>();
+
+        launchItemList = new ArrayList<LaunchItem>();
+        Context context = getApplicationContext();
+        databaseManager = new LaunchItemDatabaseManager(getApplicationContext());
+        launchItemList = databaseManager.getLaunchItems();
 
         SharedPreferences.Editor preferences = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
         preferences.putInt("gestureColor", getResources().getColor(R.color.drawing_color));
@@ -77,18 +82,19 @@ public class StartActivity extends Activity implements GestureProvider {
             String name = data.getStringExtra("name");
             ApplicationItem ai = new ApplicationItem(this, (ApplicationInfo) data.getParcelableExtra("applicationinfo"));
 
-            GestureItem gi = new GestureItem(g, name);
-            gi.setApplicationItem(ai);
+            LaunchItem gi = new LaunchItem(name, g, ai);
 
             SharedPreferences prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE);
 
             Bitmap b = GestureUtil.toBitmap(g, prefs.getInt("gestureColor", 0), prefs.getFloat("gestureStrokeWidth", 1));
 
-            //Utils.saveBitmapToFile(""+gestures.size(), b);
+            Utils.saveBitmapToFile(this, ""+gi.getId(), b);
 
-            gi.setImage(b);
+            gi.setGestureImage(b);
 
             addGesture(gi);
+
+            databaseManager.putLaunchItem(gi);
 
             Log.d(TAG, "Added Gesture. ");
 
@@ -110,25 +116,25 @@ public class StartActivity extends Activity implements GestureProvider {
     }
 
     @Override
-    public List<GestureItem> getGestures() {
-        return gestures;
+    public List<LaunchItem> getLaunchItemList() {
+        return launchItemList;
     }
 
     @Override
-    public void addGesture(GestureItem g) {
-        gestures.add(g);
-        for(GestureSubscriber s:subscribers){
+    public void addGesture(LaunchItem g) {
+        launchItemList.add(g);
+        for(LaunchItemSubscriber s:subscribers){
             s.update();
         }
     }
 
     @Override
-    public void addSubscriber(GestureSubscriber sub) {
+    public void addSubscriber(LaunchItemSubscriber sub) {
         subscribers.add(sub);
     }
 
     @Override
-    public void removeSubscriber(GestureSubscriber sub) {
+    public void removeSubscriber(LaunchItemSubscriber sub) {
         subscribers.remove(sub);
     }
 }

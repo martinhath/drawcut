@@ -8,16 +8,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import net.hath.drawcut.data.ApplicationItem;
-import net.hath.drawcut.data.GestureItem;
+import net.hath.drawcut.data.LaunchItem;
 import net.hath.drawcut.R;
 
 import java.util.List;
 
-public class GestureListAdapter extends ArrayAdapter<GestureItem> {
+public class GestureListAdapter extends ArrayAdapter<LaunchItem> {
     private static final String TAG = "GestureListAdapter";
     final LayoutInflater inflater;
 
-    public GestureListAdapter(Context context, int resource, List<GestureItem> objects) {
+    public GestureListAdapter(Context context, int resource, List<LaunchItem> objects) {
         super(context, resource, objects);
         inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         setNotifyOnChange(true);
@@ -40,19 +40,19 @@ public class GestureListAdapter extends ArrayAdapter<GestureItem> {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        GestureItem gesture = getItem(position);
+        LaunchItem gesture = getItem(position);
 
         String name = gesture.getName();
 
         holder.name.setText(name);
 
-        ApplicationItem app = gesture.getApp();
+        ApplicationItem app = gesture.getApplicationItem();
 
         holder.app.setText(app.getPackageName());
 
         holder.icon.setImageDrawable(app.getIcon());
 
-        holder.image.setImageBitmap(getItem(position).getImage());
+        holder.image.setImageBitmap(getItem(position).getGestureImage());
 
         return convertView;
     }
