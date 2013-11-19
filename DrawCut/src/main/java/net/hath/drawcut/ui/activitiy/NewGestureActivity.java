@@ -27,7 +27,6 @@ public class NewGestureActivity extends Activity {
     DrawingView drawingView;
     EditText formName;
     ImageView appicon;
-    Intent intent;
     Gesture gesture;
     ApplicationInfo application;
 
@@ -85,11 +84,6 @@ public class NewGestureActivity extends Activity {
         data.putExtra("gesture", gesture);
 
         String name = formName.getText().toString();
-
-        //String appName = formAppName.getText().toString();
-        // TODO: Remove when launch
-        name = name.equals("") ? String.valueOf(formName.hashCode()) : name;
-        // END_TODO
 
         data.putExtra("name", name);
         data.putExtra("applicationinfo", application);

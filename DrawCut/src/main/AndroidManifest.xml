@@ -38,9 +38,6 @@
         <service
                 android:name=".service.HUD"
                 android:process=":hud"/>
-        <service
-                android:name=".service.LauncherService"
-                android:process=":hud"/>
     </application>
 
 

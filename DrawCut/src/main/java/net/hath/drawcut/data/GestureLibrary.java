@@ -17,6 +17,9 @@ public class GestureLibrary extends GestureStore {
     private static GestureLibrary instance;
     private static Context context;
     private static String filename = "gestures";
+    private static final float GESTURE_THRESHOLD = 3f;
+
+    private boolean isLoaded = false;
 
     public static GestureLibrary getInstance(Context context) {
         if (instance == null) {
@@ -27,18 +30,36 @@ public class GestureLibrary extends GestureStore {
     }
 
     public String getBestPredictionName(Gesture g) {
+        return getBestPredictionName(g, GESTURE_THRESHOLD);
+    }
+
+    public String getBestPredictionName(Gesture g, float threshold) {
         ArrayList<Prediction> predictions = super.recognize(g);
         if (predictions != null && predictions.size() > 0) {
+            Prediction p = predictions.get(0);
+            double score = p.score;
+            if(Double.isNaN(score)) score = 0;
+            Log.w(TAG, String.format("Score: %f(%f)", score, p.score));
+            if(score < threshold){
+                return null;
+            }
             return predictions.get(0).name;
         }
         Log.w(TAG, "No match found.");
         return null;
     }
 
+    @Override
+    public void addGesture(String entryName, Gesture gesture) {
+        super.addGesture(entryName, gesture);
+        isLoaded = false;
+    }
+
     public void load() {
         try {
             InputStream in = context.openFileInput(filename);
             super.load(in);
+            isLoaded = true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -56,6 +77,10 @@ public class GestureLibrary extends GestureStore {
             e.printStackTrace();
         }
 
+    }
+
+    public boolean isLoaded(){
+        return isLoaded;
     }
 
 }

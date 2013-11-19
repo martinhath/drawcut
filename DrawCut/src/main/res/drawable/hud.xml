@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-        android:shape="oval"
+       android:shape="oval"
         >
 
-    <solid android:color="@color/drawing_color" />
+    <solid
+            android:color="@color/drawing_color_opaque"
+            />
 
     <size
-        android:height="@dimen/hud_radius"
-        android:width="@dimen/hud_radius" />
+            android:height="@dimen/hud_radius"
+            android:width="@dimen/hud_radius"/>
 
 </shape>

@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class StartActivity extends Activity implements LaunchItemProvider {
     private static final String TAG = "StartActivity";
@@ -52,13 +53,18 @@ public class StartActivity extends Activity implements LaunchItemProvider {
 
         gestureLibrary.load();
 
+        Set<String> strings = gestureLibrary.getGestureEntries();
+        for(String s:strings){
+            Log.d(TAG, "Gesture: "+s);
+        }
+
         launchItemList = new ArrayList<LaunchItem>();
         databaseManager = new LaunchItemDatabaseManager(getApplicationContext());
         launchItemList = databaseManager.getLaunchItems();
 
 
         for (LaunchItem li : launchItemList) {
-            List<Gesture> glist = gestureLibrary.getGestures(li.getName());
+            List<Gesture> glist = gestureLibrary.getGestures(li.getApplicationPackage());
             if(glist == null){
                 Log.d(TAG, "glist is null");
                 continue;
