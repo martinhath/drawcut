@@ -120,7 +120,7 @@ public class StartActivity extends Activity implements LaunchItemProvider {
             databaseManager.putLaunchItem(gi);
 
 
-            gestureLibrary.addGesture(name, g);
+            gestureLibrary.addGesture(ai.getPackageName(), g);
 
             Log.d(TAG, "Added Gesture. ");
 

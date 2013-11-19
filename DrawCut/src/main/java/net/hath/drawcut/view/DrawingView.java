@@ -1,5 +1,6 @@
 package net.hath.drawcut.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.gesture.Gesture;
@@ -19,24 +20,33 @@ import java.util.List;
 
 
 public class DrawingView extends SquareView implements View.OnTouchListener {
+
     @SuppressWarnings("UnusedDeclaration")
     private static final String TAG = "DrawingView";
-
     private Context context;
-
     private ArrayList<GesturePoint> points = new ArrayList<GesturePoint>();
     private ArrayList<GesturePoint> points_old = new ArrayList<GesturePoint>();
-
     private List<GestureStroke> gestureStrokes = new LinkedList<GestureStroke>();
-
     private Paint color;
     private Paint color_fresh;
     private float strokeWidth;
+    private GestureCallback listener;
 
     public DrawingView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         init();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        Activity parent = (Activity) getContext();
+        try {
+            listener = (GestureCallback) parent;
+        } catch (ClassCastException e) {
+
+        }
     }
 
     private void init() {
@@ -83,6 +93,10 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         invalidate();
     }
 
+    public Gesture makeGesture() {
+        return makeGesture(getGestureStrokes());
+    }
+
     public Gesture makeGesture(List<GestureStroke> list) {
         Gesture g = new Gesture();
         for (GestureStroke gs : list) {
@@ -121,6 +135,9 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_UP:
                 commit();
+                if (listener != null) {
+                    listener.onGestureDrawn();
+                }
                 break;
             default:
                 GesturePoint p = new GesturePoint(motionEvent.getX(), motionEvent.getY(), 0);
@@ -129,6 +146,11 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         }
         return true;
     }
+
+    public static interface GestureCallback {
+        public void onGestureDrawn();
+    }
+
 
 }
 

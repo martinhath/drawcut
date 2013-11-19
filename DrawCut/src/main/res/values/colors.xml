@@ -7,4 +7,5 @@
 
     <color name="drawing_color_fresh">#33b5e5</color>
     <color name="drawing_color">#0099cc</color>
+    <color name="black">#333333</color>
 </resources>
