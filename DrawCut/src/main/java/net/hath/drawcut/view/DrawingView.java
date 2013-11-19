@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -41,9 +42,8 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Activity parent = (Activity) getContext();
         try {
-            listener = (GestureCallback) parent;
+            listener = (GestureCallback) getContext();
         } catch (ClassCastException e) {
 
         }
@@ -99,6 +99,9 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
 
     public Gesture makeGesture(List<GestureStroke> list) {
         Gesture g = new Gesture();
+        if(list.size() == 0) {
+            Log.w(TAG, "Returning emtpy gesture");
+        }
         for (GestureStroke gs : list) {
             g.addStroke(gs);
         }

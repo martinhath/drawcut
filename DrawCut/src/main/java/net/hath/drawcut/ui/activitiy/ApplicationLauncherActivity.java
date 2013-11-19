@@ -44,6 +44,7 @@ public class ApplicationLauncherActivity extends Activity implements DrawingView
         String name = gestureLibrary.getBestPredictionName(g);
 
         Intent intent = getPackageManager().getLaunchIntentForPackage(name);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
         finish();
     }

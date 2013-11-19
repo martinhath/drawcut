@@ -4,6 +4,7 @@ import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureStore;
 import android.gesture.Prediction;
+import android.util.Log;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class GestureLibrary extends GestureStore {
+    private static final String TAG = "GestureLibrary";
     private static GestureLibrary instance;
     private static Context context;
     private static String filename = "gestures";
@@ -29,6 +31,7 @@ public class GestureLibrary extends GestureStore {
         if (predictions != null && predictions.size() > 0) {
             return predictions.get(0).name;
         }
+        Log.w(TAG, "No match found.");
         return null;
     }
 

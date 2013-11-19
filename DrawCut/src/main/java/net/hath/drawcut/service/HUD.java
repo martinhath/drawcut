@@ -18,6 +18,8 @@ public class HUD extends Service {
     private View view;
     private WindowManager windowManager;
 
+    private Service launcher;
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -72,10 +74,8 @@ public class HUD extends Service {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HUD.this, ApplicationLauncherActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(intent);
+                Intent intent = new Intent(HUD.this, LauncherService.class);
+                startService(intent);
             }
         });
 
