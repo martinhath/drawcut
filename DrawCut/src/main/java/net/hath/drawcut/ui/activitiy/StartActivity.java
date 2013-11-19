@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import net.hath.drawcut.R;
 import net.hath.drawcut.data.*;
+import net.hath.drawcut.service.HUD;
 import net.hath.drawcut.ui.fragment.LaunchItemListFragment;
 import net.hath.drawcut.util.GestureUtil;
 import net.hath.drawcut.util.Utils;
@@ -73,6 +74,10 @@ public class StartActivity extends Activity implements LaunchItemProvider {
         preferences.putInt("gestureColorFresh", getResources().getColor(R.color.drawing_color_fresh));
         preferences.putFloat("gestureStrokeWidth", 10f);
         preferences.apply();
+
+
+
+        startService(new Intent(this, HUD.class));
 
     }
 
