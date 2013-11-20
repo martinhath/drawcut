@@ -14,19 +14,14 @@ import java.util.ArrayList;
 
 public class GestureLibrary extends GestureStore {
     private static final String TAG = "GestureLibrary";
-    private static GestureLibrary instance;
-    private static Context context;
     private static String filename = "gestures";
     private static final float GESTURE_THRESHOLD = 3f;
 
+    private Context context;
     private boolean isLoaded = false;
 
-    public static GestureLibrary getInstance(Context context) {
-        if (instance == null) {
-            instance = new GestureLibrary();
-            GestureLibrary.context = context;
-        }
-        return instance;
+    public GestureLibrary(Context context){
+        this.context = context;
     }
 
     public String getBestPredictionName(Gesture g) {

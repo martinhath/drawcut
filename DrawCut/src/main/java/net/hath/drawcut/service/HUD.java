@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import net.hath.drawcut.R;
 import net.hath.drawcut.data.GestureLibrary;
+import net.hath.drawcut.data.LaunchItem;
+import net.hath.drawcut.data.LaunchItemProvider;
 import net.hath.drawcut.view.DrawingView;
 
 public class HUD extends Service implements DrawingView.GestureCallback {
@@ -27,7 +29,7 @@ public class HUD extends Service implements DrawingView.GestureCallback {
     private View view;
     private DrawingView drawingView;
     private WindowManager windowManager;
-    private GestureLibrary glib;
+    private LaunchItemProvider launchItemProvider;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -49,8 +51,19 @@ public class HUD extends Service implements DrawingView.GestureCallback {
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
-        windowManager.addView(view, params);
 
+
+
+
+        params.windowAnimations = android.R.style.Animation_Translucent;
+
+
+
+
+
+
+
+        windowManager.addView(view, params);
 
         view.setOnTouchListener(new View.OnTouchListener() {
             private WindowManager.LayoutParams lp = params;
@@ -91,6 +104,10 @@ public class HUD extends Service implements DrawingView.GestureCallback {
     }
 
     public void createDrawingView() {
+        if(launchItemProvider == null){
+            launchItemProvider = LaunchItemProvider.getInstance(this);
+            launchItemProvider.init();
+        }
         drawingView = new DrawingView(this, null);
 
         drawingView.setOnTouchListener(new View.OnTouchListener() {
@@ -103,10 +120,6 @@ public class HUD extends Service implements DrawingView.GestureCallback {
 
         Resources res = getResources();
 
-        glib = GestureLibrary.getInstance(this);
-        if (!glib.isLoaded()) {
-            glib.load();
-        }
 
         drawingView.setBackgroundColor(res.getColor(R.color.grey_dark));
 
@@ -129,9 +142,8 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         }
         drawingView.clear();
 
-        if(! glib.isLoaded()){
-            glib.load();
-        }
+        GestureLibrary glib = launchItemProvider.getGestureLibrary();
+
         String name = glib.getBestPredictionName(g);
         Log.d(TAG, "PACKAGE NAME: " + name);
         if (name == "" || name == null) {
