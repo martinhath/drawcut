@@ -1,10 +1,12 @@
 package net.hath.drawcut.service;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.gesture.Gesture;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,13 +16,12 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import net.hath.drawcut.R;
 import net.hath.drawcut.data.GestureLibrary;
-import net.hath.drawcut.data.LaunchItem;
 import net.hath.drawcut.data.LaunchItemProvider;
 import net.hath.drawcut.view.DrawingView;
 
 public class HUD extends Service implements DrawingView.GestureCallback {
     private static final String TAG = "HUD";
-    final WindowManager.LayoutParams dViewParams = new WindowManager.LayoutParams(
+    private final WindowManager.LayoutParams dViewParams = new WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.TYPE_PHONE,
@@ -51,17 +52,8 @@ public class HUD extends Service implements DrawingView.GestureCallback {
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
-
-
-
-
-        params.windowAnimations = android.R.style.Animation_Translucent;
-
-
-
-
-
-
+        params.windowAnimations = android.R.style.Animation_Dialog;
+        dViewParams.windowAnimations = android.R.style.Animation_Dialog;
 
         windowManager.addView(view, params);
 
@@ -103,6 +95,7 @@ public class HUD extends Service implements DrawingView.GestureCallback {
 
     }
 
+    @SuppressLint("NewApi")
     public void createDrawingView() {
         if(launchItemProvider == null){
             launchItemProvider = LaunchItemProvider.getInstance(this);
@@ -121,7 +114,13 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         Resources res = getResources();
 
 
-        drawingView.setBackgroundColor(res.getColor(R.color.grey_dark));
+        Drawable d = res.getDrawable(R.drawable.white_box);
+        int sdk = android.os.Build.VERSION.SDK_INT;
+        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            drawingView.setBackgroundDrawable(d);
+        } else {
+            drawingView.setBackground(d);
+        }
 
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
@@ -142,12 +141,13 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         }
         drawingView.clear();
 
+        windowManager.removeView(drawingView);
+
         GestureLibrary glib = launchItemProvider.getGestureLibrary();
 
         String name = glib.getBestPredictionName(g);
         Log.d(TAG, "PACKAGE NAME: " + name);
         if (name == "" || name == null) {
-            windowManager.removeView(drawingView);
             return;
         }
 
@@ -155,8 +155,6 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-
-        windowManager.removeView(drawingView);
     }
 
     @Override

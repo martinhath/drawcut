@@ -10,4 +10,5 @@
     <color name="black">#333333</color>
 
     <color name="drawing_color_opaque">#aa0099cc</color>
+    <color name="black_trans">#55000000</color>
 </resources>
