@@ -31,6 +31,9 @@ public class GestureLibrary extends GestureStore {
     public String getBestPredictionName(Gesture g, float threshold) {
         ArrayList<Prediction> predictions = super.recognize(g);
         if (predictions != null && predictions.size() > 0) {
+            for(Prediction p:predictions){
+                Log.d(TAG, p.name+" "+p.score);
+            }
             Prediction p = predictions.get(0);
             double score = p.score;
             if(Double.isNaN(score)) score = 0;

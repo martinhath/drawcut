@@ -11,17 +11,23 @@ import net.hath.drawcut.data.ApplicationItem;
 import net.hath.drawcut.data.LaunchItem;
 import net.hath.drawcut.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class GestureListAdapter extends ArrayAdapter<LaunchItem> {
-    private static final String TAG = "GestureListAdapter";
+public class LaunchItemAdapter extends ArrayAdapter<LaunchItem> {
+    private static final String TAG = "LaunchItemAdapter";
     final LayoutInflater inflater;
 
-    public GestureListAdapter(Context context, int resource, List<LaunchItem> objects) {
-        super(context, resource, objects);
+    public LaunchItemAdapter(Context context, int resource) {
+        super(context, resource);
         inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        setNotifyOnChange(true);
+    }
 
+
+    public void setData(List<LaunchItem> lst){
+        clear();
+        addAll(lst);
+        notifyDataSetChanged();
     }
 
     @Override

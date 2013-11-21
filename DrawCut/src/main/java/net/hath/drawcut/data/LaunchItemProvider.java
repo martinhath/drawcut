@@ -3,14 +3,19 @@ package net.hath.drawcut.data;
 import android.content.Context;
 import android.gesture.Gesture;
 import android.util.Log;
+import net.hath.drawcut.Observer;
+import net.hath.drawcut.Subject;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class LaunchItemProvider {
+public class LaunchItemProvider implements Subject {
 
     private static final String TAG = "LaunchItemProvider";
     private static LaunchItemProvider instance;
+
+    private List<Observer> observers;
 
     private Context context;
     private GestureLibrary gestureLibrary;
@@ -31,6 +36,7 @@ public class LaunchItemProvider {
 
     public void init(){
         gestureLibrary.load();
+        observers = new LinkedList<Observer>();
     }
 
     public void addLaunchItem(LaunchItem li){
@@ -39,6 +45,8 @@ public class LaunchItemProvider {
 
         gestureLibrary.addGesture(packageName, gesture);
         databaseManager.putLaunchItem(li);
+
+        notifyObservers();
     }
 
     public GestureLibrary getGestureLibrary(){
@@ -64,6 +72,22 @@ public class LaunchItemProvider {
 
     public void save(){
         gestureLibrary.save();
+    }
+
+    @Override
+    public void register(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void unregister(Observer o) {
+        observers.remove(o);
+    }
+
+    private void notifyObservers() {
+        for(Observer o:observers){
+            o.update();
+        }
     }
 
 }

@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +12,17 @@ import android.widget.ListView;
 import net.hath.drawcut.*;
 import net.hath.drawcut.data.LaunchItem;
 import net.hath.drawcut.data.LaunchItemProvider;
-import net.hath.drawcut.ui.adapter.GestureListAdapter;
+import net.hath.drawcut.ui.adapter.LaunchItemAdapter;
 
 import java.util.List;
 
 
-public class LaunchItemListFragment extends Fragment {
+public class LaunchItemListFragment extends Fragment implements Observer {
     private static final String TAG = "LaunchItemListFragment";
 
     public  ListView listView;
-    private GestureListAdapter listAdapter;
+    private LaunchItemAdapter listAdapter;
+    private LaunchItemProvider launchItemProvider;
     private List<LaunchItem> items;
 
     @Override
@@ -30,9 +30,13 @@ public class LaunchItemListFragment extends Fragment {
         View view = inflater.inflate(R.layout.list_layout, null);
         assert view != null;
 
-        items = LaunchItemProvider.getInstance(getActivity()).getLaunchItems();
+        launchItemProvider = LaunchItemProvider.getInstance(getActivity());
+        launchItemProvider.register(this);
 
-        listAdapter = new GestureListAdapter(getActivity(), 0, items);
+        items = launchItemProvider.getLaunchItems();
+
+        listAdapter = new LaunchItemAdapter(getActivity(), 0);
+        listAdapter.setData(items);
 
         listView = (ListView) view.findViewById(R.id.gesturelist);
 
@@ -44,11 +48,17 @@ public class LaunchItemListFragment extends Fragment {
                 PackageManager pm = getActivity().getPackageManager();
                 LaunchItem gi = items.get(i);
                 Intent intent = pm.getLaunchIntentForPackage(gi.getApplicationItem().getPackageName());
-                if(intent == null) return; // Will probably have to filter out these in a way.
+                if(intent == null) return;
                 startActivity(intent);
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void update() {
+        items = launchItemProvider.getLaunchItems();
+        listAdapter.setData(items);
     }
 }

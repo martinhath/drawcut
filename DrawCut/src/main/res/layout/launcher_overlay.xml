@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_large"
+        >
+
+
+    <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@+id/draw"
+            android:layout_alignLeft="@+id/draw"
+            android:layout_alignBottom="@+id/draw"
+            android:background="@drawable/white_box"
+            android:layout_alignRight="@+id/draw"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/draw_here"
+            android:textSize="@dimen/text_extreme"
+            android:textColor="@color/grey_lighter"/>
+
+    <net.hath.drawcut.view.DrawingView
+            android:id="@+id/draw"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+</RelativeLayout>
