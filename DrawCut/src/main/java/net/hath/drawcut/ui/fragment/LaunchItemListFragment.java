@@ -23,6 +23,7 @@ public class LaunchItemListFragment extends Fragment {
 
     public  ListView listView;
     private GestureListAdapter listAdapter;
+    private LaunchItemProvider launchItemProvider;
     private List<LaunchItem> items;
 
     @Override
@@ -30,7 +31,8 @@ public class LaunchItemListFragment extends Fragment {
         View view = inflater.inflate(R.layout.list_layout, null);
         assert view != null;
 
-        items = LaunchItemProvider.getInstance(getActivity()).getLaunchItems();
+        launchItemProvider = LaunchItemProvider.getInstance(getActivity());
+        items = launchItemProvider.getLaunchItems();
 
         listAdapter = new GestureListAdapter(getActivity(), 0, items);
 
