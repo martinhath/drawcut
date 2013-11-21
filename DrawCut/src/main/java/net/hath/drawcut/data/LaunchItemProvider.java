@@ -34,7 +34,7 @@ public class LaunchItemProvider implements Subject {
         return instance;
     }
 
-    public void init(){
+    private void init(){
         gestureLibrary.load();
         observers = new LinkedList<Observer>();
     }

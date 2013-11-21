@@ -40,7 +40,6 @@ public class StartActivity extends Activity {
 
 
         launchItemProvider = LaunchItemProvider.getInstance(this);
-        launchItemProvider.init();
 
         SharedPreferences.Editor preferences = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
         preferences.putInt("gestureColor", getResources().getColor(R.color.drawing_color));
