@@ -20,12 +20,7 @@ import net.hath.drawcut.view.DrawingView;
 
 public class HUD extends Service implements DrawingView.GestureCallback {
     private static final String TAG = "HUD";
-    private final WindowManager.LayoutParams drawingParams = new WindowManager.LayoutParams(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.TYPE_PHONE,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-            PixelFormat.TRANSLUCENT);
+    private WindowManager.LayoutParams drawingParams;
     private View floater;
     private DrawingView drawingView;
     private WindowManager windowManager;
@@ -43,9 +38,7 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         floater = new ImageView(this);
         drawingView = new DrawingView(this, null);
 
-
         Resources res = getResources();
-
         ((ImageView) floater).setImageDrawable(res.getDrawable(R.drawable.hud));
 
         Drawable d = res.getDrawable(R.drawable.white_box);
@@ -74,6 +67,14 @@ public class HUD extends Service implements DrawingView.GestureCallback {
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
+
+        drawingParams = new WindowManager.LayoutParams(
+                (int) res.getDimension(R.dimen.launcher_size),
+                (int) res.getDimension(R.dimen.launcher_size),
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_DIM_BEHIND,
+                PixelFormat.TRANSLUCENT);
+        drawingParams.dimAmount = 0.2F;
 
         floaterParams.windowAnimations = android.R.style.Animation_Dialog;
         drawingParams.windowAnimations = android.R.style.Animation_Dialog;
@@ -128,7 +129,6 @@ public class HUD extends Service implements DrawingView.GestureCallback {
             }
         });
     }
-
 
     @Override
     public void onGestureDrawn() {

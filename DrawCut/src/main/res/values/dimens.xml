@@ -14,6 +14,7 @@
     <dimen name="app_icon_padded">64dp</dimen>
 
     <dimen name="hud_radius">25dp</dimen>
+    <dimen name="launcher_size">256dp</dimen>
 
     <item name="alpha_value" format="float" type="dimen" >0.2</item>
 </resources>
