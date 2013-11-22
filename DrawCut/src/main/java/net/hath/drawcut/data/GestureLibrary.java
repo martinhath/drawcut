@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class GestureLibrary extends GestureStore {
     private static final String TAG = "GestureLibrary";
     private static String filename = "gestures";
-    private static final float GESTURE_THRESHOLD = 3f;
+    private static final float GESTURE_THRESHOLD = 2.5f;
 
     private Context context;
     private boolean isLoaded = false;
