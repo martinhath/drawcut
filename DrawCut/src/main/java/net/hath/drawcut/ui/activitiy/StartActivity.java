@@ -20,8 +20,6 @@ import net.hath.drawcut.ui.fragment.LaunchItemListFragment;
 import net.hath.drawcut.util.GestureUtil;
 import net.hath.drawcut.util.Utils;
 
-import java.util.List;
-
 public class StartActivity extends Activity {
     private static final String TAG = "StartActivity";
     private Fragment content;

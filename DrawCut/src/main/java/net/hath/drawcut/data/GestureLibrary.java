@@ -20,7 +20,7 @@ public class GestureLibrary extends GestureStore {
     private Context context;
     private boolean isLoaded = false;
 
-    public GestureLibrary(Context context){
+    public GestureLibrary(Context context) {
         this.context = context;
     }
 
@@ -31,14 +31,14 @@ public class GestureLibrary extends GestureStore {
     public String getBestPredictionName(Gesture g, float threshold) {
         ArrayList<Prediction> predictions = super.recognize(g);
         if (predictions != null && predictions.size() > 0) {
-            for(Prediction p:predictions){
-                Log.d(TAG, p.name+" "+p.score);
+            for (Prediction p : predictions) {
+                Log.d(TAG, p.name + " " + p.score);
             }
             Prediction p = predictions.get(0);
             double score = p.score;
-            if(Double.isNaN(score)) score = 0;
+            if (Double.isNaN(score)) score = 0;
             Log.w(TAG, String.format("Score: %f(%f)", score, p.score));
-            if(score < threshold){
+            if (score < threshold) {
                 return null;
             }
             return predictions.get(0).name;
@@ -77,7 +77,7 @@ public class GestureLibrary extends GestureStore {
 
     }
 
-    public boolean isLoaded(){
+    public boolean isLoaded() {
         return isLoaded;
     }
 

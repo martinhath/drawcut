@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.gesture.Gesture;
-import android.os.Parcel;
 import android.util.Log;
 import net.hath.drawcut.util.Utils;
 
@@ -24,7 +22,7 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
     private static final String KEY_PACKAGE = "package";
     private Context context;
 
-    public LaunchItemDatabaseManager(Context context){
+    public LaunchItemDatabaseManager(Context context) {
         this(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -66,10 +64,10 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void putLaunchItems(List<LaunchItem> list){
+    public void putLaunchItems(List<LaunchItem> list) {
         SQLiteDatabase db = getWritableDatabase();
 
-        for(LaunchItem gi:list){
+        for (LaunchItem gi : list) {
             String name = gi.getName();
             String packageName = gi.getApplicationItem().getPackageName();
 
@@ -115,7 +113,7 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
             ApplicationItem ai = ApplicationItem.createFromPackageName(context, packageName);
 
             LaunchItem li = new LaunchItem(name, null, ai);
-            li.setGestureImage(Utils.loadBitmapFromFile(context, ""+li.getId()));
+            li.setGestureImage(Utils.loadBitmapFromFile(context, "" + li.getId()));
             list.add(li);
         } while (cursor.moveToNext());
 

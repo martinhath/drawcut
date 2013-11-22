@@ -9,7 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import net.hath.drawcut.*;
+import net.hath.drawcut.Observer;
+import net.hath.drawcut.R;
 import net.hath.drawcut.data.LaunchItem;
 import net.hath.drawcut.data.LaunchItemProvider;
 import net.hath.drawcut.ui.adapter.LaunchItemAdapter;
@@ -20,7 +21,7 @@ import java.util.List;
 public class LaunchItemListFragment extends Fragment implements Observer {
     private static final String TAG = "LaunchItemListFragment";
 
-    public  ListView listView;
+    public ListView listView;
     private LaunchItemAdapter listAdapter;
     private LaunchItemProvider launchItemProvider;
     private List<LaunchItem> items;
@@ -48,7 +49,7 @@ public class LaunchItemListFragment extends Fragment implements Observer {
                 PackageManager pm = getActivity().getPackageManager();
                 LaunchItem gi = items.get(i);
                 Intent intent = pm.getLaunchIntentForPackage(gi.getApplicationItem().getPackageName());
-                if(intent == null) return;
+                if (intent == null) return;
                 startActivity(intent);
             }
         });

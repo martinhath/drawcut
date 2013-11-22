@@ -9,23 +9,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.Button;
-import net.hath.drawcut.view.DrawingView;
 import net.hath.drawcut.R;
+import net.hath.drawcut.view.DrawingView;
 
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 
-public class DrawingFragment extends Fragment{
+public class DrawingFragment extends Fragment {
 
-    private static final String TAG = "DrawingFragment" ;
+    private static final String TAG = "DrawingFragment";
     DrawingView drawingView = null;
 
     GestureStore gl;
@@ -43,7 +38,8 @@ public class DrawingFragment extends Fragment{
 
         Button b = (Button) view.findViewById(R.id.button);
         b.setOnClickListener(new View.OnClickListener() {
-            int c=0;
+            int c = 0;
+
             @Override
             public void onClick(View view) {
                 drawingView.commit();
@@ -56,10 +52,10 @@ public class DrawingFragment extends Fragment{
 
                 try {
                     String path = Environment.getExternalStorageDirectory().toString();
-                    FileOutputStream out = new FileOutputStream(path+"/test.png");
+                    FileOutputStream out = new FileOutputStream(path + "/test.png");
                     b.compress(Bitmap.CompressFormat.PNG, 90, out);
                     out.close();
-                    Log.d(TAG, "Saved to "+path+"/test.png");
+                    Log.d(TAG, "Saved to " + path + "/test.png");
                 } catch (Exception e) {
                     Log.w(TAG, "Not saved. ");
                     e.printStackTrace();
@@ -76,7 +72,7 @@ public class DrawingFragment extends Fragment{
 
                 ArrayList<Prediction> preds = gl.recognize(g);
                 Log.d(TAG, "Gjettinger:");
-                for(Prediction p:preds){
+                for (Prediction p : preds) {
                     Log.d(TAG, p.toString());
                 }
                 Log.d(TAG, "Gjettinger_END:");

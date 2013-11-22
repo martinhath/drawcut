@@ -13,8 +13,8 @@ public class ApplicationItem {
     private Drawable icon;
     private String packageName;
 
-    public ApplicationItem(Context context, ApplicationInfo ai){
-        if(pm == null){
+    public ApplicationItem(Context context, ApplicationInfo ai) {
+        if (pm == null) {
             pm = context.getPackageManager();
         }
         appName = pm.getApplicationLabel(ai).toString();
@@ -36,14 +36,14 @@ public class ApplicationItem {
     }
 
     public static ApplicationItem createFromPackageName(Context context, String packageName) {
-        if(pm == null){
+        if (pm == null) {
             pm = context.getPackageManager();
         }
         ApplicationInfo ainfo;
-        try{
+        try {
             ainfo = pm.getApplicationInfo(packageName, 0);
             return new ApplicationItem(context, ainfo);
-        }catch(PackageManager.NameNotFoundException e){
+        } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         return null;

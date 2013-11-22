@@ -2,11 +2,9 @@ package net.hath.drawcut.data;
 
 import android.content.Context;
 import android.gesture.Gesture;
-import android.util.Log;
 import net.hath.drawcut.Observer;
 import net.hath.drawcut.Subject;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,9 +19,11 @@ public class LaunchItemProvider implements Subject {
     private GestureLibrary gestureLibrary;
     private LaunchItemDatabaseManager databaseManager;
 
-    private LaunchItemProvider(){}
-    public static LaunchItemProvider getInstance(Context context){
-        if(instance == null){
+    private LaunchItemProvider() {
+    }
+
+    public static LaunchItemProvider getInstance(Context context) {
+        if (instance == null) {
             instance = new LaunchItemProvider();
             instance.context = context;
             instance.gestureLibrary = new GestureLibrary(context);
@@ -34,12 +34,12 @@ public class LaunchItemProvider implements Subject {
         return instance;
     }
 
-    private void init(){
+    private void init() {
         gestureLibrary.load();
         observers = new LinkedList<Observer>();
     }
 
-    public void addLaunchItem(LaunchItem li){
+    public void addLaunchItem(LaunchItem li) {
         String packageName = li.getApplicationPackage();
         Gesture gesture = li.getGesture();
 
@@ -49,16 +49,16 @@ public class LaunchItemProvider implements Subject {
         notifyObservers();
     }
 
-    public GestureLibrary getGestureLibrary(){
+    public GestureLibrary getGestureLibrary() {
         return gestureLibrary;
     }
 
-    public List<LaunchItem> getLaunchItems(){
+    public List<LaunchItem> getLaunchItems() {
         List<LaunchItem> list = databaseManager.getLaunchItems();
 
         for (LaunchItem li : list) {
             List<Gesture> glist = gestureLibrary.getGestures(li.getApplicationPackage());
-            if(glist == null){
+            if (glist == null) {
                 continue;
             }
             Gesture g = glist.get(0);
@@ -70,7 +70,7 @@ public class LaunchItemProvider implements Subject {
         return list;
     }
 
-    public void save(){
+    public void save() {
         gestureLibrary.save();
     }
 
@@ -85,7 +85,7 @@ public class LaunchItemProvider implements Subject {
     }
 
     private void notifyObservers() {
-        for(Observer o:observers){
+        for (Observer o : observers) {
             o.update();
         }
     }

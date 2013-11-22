@@ -51,7 +51,7 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         Drawable d = res.getDrawable(R.drawable.white_box);
 
         int sdk = android.os.Build.VERSION.SDK_INT;
-        if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+        if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
             drawingView.setBackgroundDrawable(d);
         } else {
             drawingView.setBackground(d);
@@ -119,16 +119,15 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         drawingView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                Log.d(TAG, i+"");
+                Log.d(TAG, i + "");
                 int key = keyEvent.getKeyCode();
-                if(key == KeyEvent.KEYCODE_BACK || key == KeyEvent.KEYCODE_HOME){
+                if (key == KeyEvent.KEYCODE_BACK || key == KeyEvent.KEYCODE_HOME) {
                     windowManager.removeView(drawingView);
                 }
                 return false;
             }
         });
     }
-
 
 
     @Override

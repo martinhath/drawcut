@@ -10,10 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import net.hath.drawcut.util.ApplicationInfoComparator;
 import net.hath.drawcut.R;
 import net.hath.drawcut.ui.activitiy.NewGestureActivity;
 import net.hath.drawcut.ui.adapter.ApplicationAdapter;
+import net.hath.drawcut.util.ApplicationInfoComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -7,11 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import net.hath.drawcut.R;
 import net.hath.drawcut.data.ApplicationItem;
 import net.hath.drawcut.data.LaunchItem;
-import net.hath.drawcut.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LaunchItemAdapter extends ArrayAdapter<LaunchItem> {
@@ -24,7 +23,7 @@ public class LaunchItemAdapter extends ArrayAdapter<LaunchItem> {
     }
 
 
-    public void setData(List<LaunchItem> lst){
+    public void setData(List<LaunchItem> lst) {
         clear();
         addAll(lst);
         notifyDataSetChanged();

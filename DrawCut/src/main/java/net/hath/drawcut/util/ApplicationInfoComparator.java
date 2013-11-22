@@ -9,8 +9,8 @@ public class ApplicationInfoComparator implements Comparator<ApplicationInfo> {
 
     private static PackageManager pm;
 
-    public ApplicationInfoComparator(PackageManager pm){
-        if(ApplicationInfoComparator.pm == null){
+    public ApplicationInfoComparator(PackageManager pm) {
+        if (ApplicationInfoComparator.pm == null) {
             ApplicationInfoComparator.pm = pm;
         }
     }

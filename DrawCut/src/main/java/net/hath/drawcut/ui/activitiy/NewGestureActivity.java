@@ -16,9 +16,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import net.hath.drawcut.R;
 import net.hath.drawcut.ui.fragment.ApplicationPickerDialog;
 import net.hath.drawcut.view.DrawingView;
-import net.hath.drawcut.R;
 
 public class NewGestureActivity extends Activity {
 

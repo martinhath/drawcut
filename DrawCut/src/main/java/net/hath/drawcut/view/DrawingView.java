@@ -1,6 +1,5 @@
 package net.hath.drawcut.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.gesture.Gesture;
@@ -12,7 +11,6 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -100,7 +98,7 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
 
     public Gesture makeGesture(List<GestureStroke> list) {
         Gesture g = new Gesture();
-        if(list.size() == 0) {
+        if (list.size() == 0) {
             Log.w(TAG, "Returning emtpy gesture");
         }
         for (GestureStroke gs : list) {
