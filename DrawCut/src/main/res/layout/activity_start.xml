@@ -17,15 +17,5 @@
         android:layout_weight="1">
     </RelativeLayout>
 
-    <Button
-            android:id="@+id/button_launch"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/launch_app"
-            android:background="?android:attr/selectableItemBackground"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.Button"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"/>
-
 
 </LinearLayout>
