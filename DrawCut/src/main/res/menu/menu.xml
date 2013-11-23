@@ -7,13 +7,6 @@
         android:showAsAction="never"/>
 
     <item
-        android:id="@+id/action_clear"
-        android:title="@string/clear"
-        android:icon="@drawable/ic_action_remove"
-        android:orderInCategory="10"
-        android:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/action_add"
         android:title="@string/add"
         android:orderInCategory="20"

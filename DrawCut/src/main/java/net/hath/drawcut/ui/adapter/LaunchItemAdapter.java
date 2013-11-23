@@ -33,7 +33,7 @@ public class LaunchItemAdapter extends ArrayAdapter<LaunchItem> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.gesturelist_item, null);
+            convertView = inflater.inflate(R.layout.launchitem_list_item, null);
             assert convertView != null;
 
             holder = new ViewHolder();
