@@ -72,7 +72,12 @@ public class StartActivity extends Activity {
         if (resultCode == RESULT_OK) {
             Gesture g = data.getParcelableExtra("gesture");
             String name = data.getStringExtra("name");
-            ApplicationItem ai = new ApplicationItem(this, (ApplicationInfo) data.getParcelableExtra("applicationinfo"));
+            ApplicationInfo appinfo = data.getParcelableExtra("applicationInfo");
+            if(appinfo == null){
+                Log.d(TAG, "Got null");
+                return;
+            }
+            ApplicationItem ai = new ApplicationItem(this, appinfo);
 
             LaunchItem gi = new LaunchItem(name, g, ai);
 

@@ -141,6 +141,9 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
                     listener.onGestureDrawn();
                 }
                 break;
+            case MotionEvent.ACTION_DOWN:
+                clear();
+                break;
             default:
                 GesturePoint p = new GesturePoint(motionEvent.getX(), motionEvent.getY(), 0);
                 points.add(p);
