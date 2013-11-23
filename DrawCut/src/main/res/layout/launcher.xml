@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_box"
+                android:clickable="true"
+                android:layout_margin="@dimen/margin_large" >
+
+
+    <view
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            class="net.hath.drawcut.view.DrawingView"
+            android:id="@+id/drawing"
+            android:focusableInTouchMode="true"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/draw_here"
+            android:id="@+id/title"
+            android:gravity="center"
+            android:textSize="@dimen/text_extreme"
+            android:textColor="@color/grey_lighter"
+            android:layout_alignTop="@+id/drawing"
+            android:layout_alignLeft="@+id/drawing"
+            android:layout_alignBottom="@+id/drawing"
+            android:layout_alignRight="@+id/drawing"
+            android:layout_centerHorizontal="true"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_medium"
+            android:padding="@dimen/margin_medium"
+            android:textColor="@color/grey_lighter"
+            android:id="@+id/desc"
+            android:layout_alignBottom="@+id/drawing"
+            android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>

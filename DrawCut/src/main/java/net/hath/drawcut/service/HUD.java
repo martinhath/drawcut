@@ -6,23 +6,21 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.gesture.Gesture;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.ImageView;
 import net.hath.drawcut.R;
 import net.hath.drawcut.data.GestureLibrary;
 import net.hath.drawcut.data.LaunchItemProvider;
 import net.hath.drawcut.view.DrawingView;
+import net.hath.drawcut.view.LauncherView;
 
 public class HUD extends Service implements DrawingView.GestureCallback {
     private static final String TAG = "HUD";
-    private WindowManager.LayoutParams drawingParams;
+    private WindowManager.LayoutParams launcherParams;
     private View floater;
+    private LauncherView launcherView;
     private DrawingView drawingView;
     private WindowManager windowManager;
     private LaunchItemProvider launchItemProvider;
@@ -37,26 +35,21 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         super.onCreate();
 
         floater = new ImageView(this);
-        drawingView = new DrawingView(this, null);
+        launcherView = new LauncherView(this, null);
+        drawingView = launcherView.getDrawingView();
 
         Resources res = getResources();
         ((ImageView) floater).setImageDrawable(res.getDrawable(R.drawable.hud));
 
-        Drawable d = res.getDrawable(R.drawable.white_box);
-
-        int sdk = android.os.Build.VERSION.SDK_INT;
-        if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            drawingView.setBackgroundDrawable(d);
-        } else {
-            drawingView.setBackground(d);
-        }
-
         launchItemProvider = LaunchItemProvider.getInstance(this);
 
-        drawingView.setOnTouchListener(new View.OnTouchListener() {
+        launcherView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 drawingView.onTouch(view, motionEvent);
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    windowManager.removeView(launcherView);
+                }
                 return false;
             }
         });
@@ -68,23 +61,25 @@ public class HUD extends Service implements DrawingView.GestureCallback {
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
+        floaterParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
 
-        drawingParams = new WindowManager.LayoutParams(
-                (int) res.getDimension(R.dimen.launcher_size),
-                (int) res.getDimension(R.dimen.launcher_size),
+        launcherParams = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_DIM_BEHIND,
                 PixelFormat.TRANSLUCENT);
-        drawingParams.dimAmount = 0.2F;
+        launcherParams.dimAmount = 0.3F;
+        launcherParams.gravity = Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL;
 
         floaterParams.windowAnimations = android.R.style.Animation_Dialog;
-        drawingParams.windowAnimations = android.R.style.Animation_Dialog;
+        launcherParams.windowAnimations = android.R.style.Animation_Dialog;
 
         windowManager.addView(floater, floaterParams);
         SharedPreferences prefs = getSharedPreferences("hud", MODE_PRIVATE);
-        float x  = prefs.getFloat("x", 0);
-        float y  = prefs.getFloat("y", 0);
-        Log.d(TAG, x+" "+y);
+        float x = prefs.getFloat("x", 0);
+        float y = prefs.getFloat("y", 0);
+        Log.d(TAG, x + " " + y);
         floater.setX(x);
         floater.setY(y);
 
@@ -119,18 +114,19 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         floater.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                windowManager.addView(drawingView, drawingParams);
-                drawingView.requestFocus();
+                windowManager.addView(launcherView, launcherParams);
+                launcherView.requestFocus();
             }
         });
 
-        drawingView.setOnKeyListener(new View.OnKeyListener() {
+        launcherView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                Log.d(TAG, i + "");
+                Log.d(TAG, "Keypress");
                 int key = keyEvent.getKeyCode();
                 if (key == KeyEvent.KEYCODE_BACK || key == KeyEvent.KEYCODE_HOME) {
-                    windowManager.removeView(drawingView);
+                    windowManager.removeView(launcherView);
+                    launcherView.setDescription("");
                 }
                 return false;
             }
@@ -141,21 +137,26 @@ public class HUD extends Service implements DrawingView.GestureCallback {
     public void onGestureDrawn() {
         Gesture g = drawingView.makeGesture();
         if (g.getStrokesCount() == 0) {
+            launcherView.setDescription("");
             return;
         }
         drawingView.clear();
 
-        windowManager.removeView(drawingView);
-
         GestureLibrary glib = launchItemProvider.getGestureLibrary();
 
         String name = glib.getBestPredictionName(g);
-        if (name == null || name.equals("")) return;
+        if (name == null || name.equals("")) {
+            launcherView.setDescription(getResources().getString(R.string.gesture_nf));
+            return;
+        }
 
         Intent intent = getPackageManager().getLaunchIntentForPackage(name);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
+        windowManager.removeView(launcherView);
+        launcherView.setDescription("");
     }
 
     @Override
@@ -164,13 +165,13 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         SharedPreferences.Editor prefs = getSharedPreferences("hud", MODE_PRIVATE).edit();
         float x = floater.getX();
         float y = floater.getY();
-        Log.d(TAG, "Put: "+x+" "+y);
+        Log.d(TAG, "Put: " + x + " " + y);
         prefs.putFloat("x", x);
         prefs.putFloat("y", y);
         prefs.apply();
 
         windowManager.removeView(floater);
-        windowManager.removeView(drawingView);
+        windowManager.removeView(launcherView);
     }
 
 }

@@ -18,7 +18,6 @@ public class GestureLibrary extends GestureStore {
     private static final float GESTURE_THRESHOLD = 2.5f;
 
     private Context context;
-    private boolean isLoaded = false;
 
     public GestureLibrary(Context context) {
         this.context = context;
@@ -50,14 +49,13 @@ public class GestureLibrary extends GestureStore {
     @Override
     public void addGesture(String entryName, Gesture gesture) {
         super.addGesture(entryName, gesture);
-        isLoaded = false;
+        Log.d(TAG, "Gesture added: "+entryName);
     }
 
     public void load() {
         try {
             InputStream in = context.openFileInput(filename);
             super.load(in);
-            isLoaded = true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -75,10 +73,6 @@ public class GestureLibrary extends GestureStore {
             e.printStackTrace();
         }
 
-    }
-
-    public boolean isLoaded() {
-        return isLoaded;
     }
 
 }

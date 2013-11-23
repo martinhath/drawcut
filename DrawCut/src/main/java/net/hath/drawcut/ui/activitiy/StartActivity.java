@@ -72,7 +72,7 @@ public class StartActivity extends Activity {
         if (resultCode == RESULT_OK) {
             Gesture g = data.getParcelableExtra("gesture");
             String name = data.getStringExtra("name");
-            ApplicationInfo appinfo = data.getParcelableExtra("applicationInfo");
+            ApplicationInfo appinfo = data.getParcelableExtra("applicationinfo");
             if(appinfo == null){
                 Log.d(TAG, "Got null");
                 return;
