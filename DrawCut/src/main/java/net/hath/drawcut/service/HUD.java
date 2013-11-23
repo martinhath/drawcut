@@ -2,6 +2,7 @@ package net.hath.drawcut.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.gesture.Gesture;
 import android.graphics.PixelFormat;
@@ -80,6 +81,12 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         drawingParams.windowAnimations = android.R.style.Animation_Dialog;
 
         windowManager.addView(floater, floaterParams);
+        SharedPreferences prefs = getSharedPreferences("hud", MODE_PRIVATE);
+        float x  = prefs.getFloat("x", 0);
+        float y  = prefs.getFloat("y", 0);
+        Log.d(TAG, x+" "+y);
+        floater.setX(x);
+        floater.setY(y);
 
         floater.setOnTouchListener(new View.OnTouchListener() {
             private WindowManager.LayoutParams lp = floaterParams;
@@ -154,6 +161,14 @@ public class HUD extends Service implements DrawingView.GestureCallback {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        SharedPreferences.Editor prefs = getSharedPreferences("hud", MODE_PRIVATE).edit();
+        float x = floater.getX();
+        float y = floater.getY();
+        Log.d(TAG, "Put: "+x+" "+y);
+        prefs.putFloat("x", x);
+        prefs.putFloat("y", y);
+        prefs.apply();
+
         windowManager.removeView(floater);
         windowManager.removeView(drawingView);
     }
