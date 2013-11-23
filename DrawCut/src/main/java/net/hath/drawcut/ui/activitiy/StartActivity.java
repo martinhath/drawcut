@@ -76,11 +76,6 @@ public class StartActivity extends Activity {
 
             LaunchItem gi = new LaunchItem(name, g, ai);
 
-            SharedPreferences prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE);
-            Bitmap b = GestureUtil.toBitmap(g, prefs.getInt("gestureColor", 0), prefs.getFloat("gestureStrokeWidth", 1));
-            gi.setGestureImage(b);
-            Utils.saveBitmapToFile(this, "" + gi.getId(), b);
-
             launchItemProvider.addLaunchItem(gi);
 
             Log.d(TAG, "Added Gesture. ");

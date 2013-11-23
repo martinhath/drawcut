@@ -30,4 +30,10 @@ public class Utils {
         String dir = context.getFilesDir().toString();
         return BitmapFactory.decodeFile(dir + "/" + name + ".png");
     }
+
+    public static void deleteBitmap(Context context, String name) {
+        if (!context.deleteFile(name + ".png")) {
+            Log.d(TAG, "Could not delete file: " + name);
+        }
+    }
 }

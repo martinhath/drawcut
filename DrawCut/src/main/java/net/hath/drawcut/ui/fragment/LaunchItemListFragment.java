@@ -1,9 +1,14 @@
 package net.hath.drawcut.ui.fragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,14 +48,12 @@ public class LaunchItemListFragment extends Fragment implements Observer {
 
         listView.setAdapter(listAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                PackageManager pm = getActivity().getPackageManager();
-                LaunchItem gi = items.get(i);
-                Intent intent = pm.getLaunchIntentForPackage(gi.getApplicationItem().getPackageName());
-                if (intent == null) return;
-                startActivity(intent);
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                EditDialog dialog = new EditDialog();
+                dialog.show(getFragmentManager(), "" + i);
+                return true;
             }
         });
 
@@ -61,5 +64,32 @@ public class LaunchItemListFragment extends Fragment implements Observer {
     public void update() {
         items = launchItemProvider.getLaunchItems();
         listAdapter.setData(items);
+    }
+
+    private class EditDialog extends DialogFragment{
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.edit)
+                    .setItems(R.array.launchitem_actions, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int index = Integer.parseInt(getTag());
+                            PackageManager pm = getActivity().getPackageManager();
+                            LaunchItem gi = items.get(index);
+                            switch(i){
+                                case 0: // Launch Application
+                                    Intent intent = pm.getLaunchIntentForPackage(gi.getApplicationItem().getPackageName());
+                                    if (intent == null) return;
+                                    startActivity(intent);
+                                    break;
+                                case 1: // Delete entry
+                                    items.remove(index);
+                                    launchItemProvider.removeLaunchItem(gi);
+                            }
+                        }
+                    });
+            return builder.create();
+        }
     }
 }

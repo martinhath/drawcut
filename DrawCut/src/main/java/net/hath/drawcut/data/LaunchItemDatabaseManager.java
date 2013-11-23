@@ -87,6 +87,17 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void removeLaunchItem(LaunchItem li) {
+        SQLiteDatabase db = getWritableDatabase();
+        if (containsLaunchItem(db, li)) {
+            String query = String.format("DELETE FROM %s WHERE %s=%d", TABLE_LAUNCHITEM, KEY_ID, li.getId());
+            db.execSQL(query);
+        }else{
+            Log.d(TAG, "Database doesn't contain this item: " + li.getName());
+        }
+        db.close();
+    }
+
     public boolean containsLaunchItem(SQLiteDatabase db, LaunchItem gi) {
         String query = String.format("SELECT * FROM %s WHERE %s = %d",
                 TABLE_LAUNCHITEM, KEY_ID, gi.getId());
@@ -121,4 +132,5 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
 
         return list;
     }
+
 }

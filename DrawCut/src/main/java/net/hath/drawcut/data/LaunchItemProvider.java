@@ -1,9 +1,13 @@
 package net.hath.drawcut.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.gesture.Gesture;
+import android.graphics.Bitmap;
 import net.hath.drawcut.Observer;
 import net.hath.drawcut.Subject;
+import net.hath.drawcut.util.GestureUtil;
+import net.hath.drawcut.util.Utils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,9 +16,7 @@ public class LaunchItemProvider implements Subject {
 
     private static final String TAG = "LaunchItemProvider";
     private static LaunchItemProvider instance;
-
     private List<Observer> observers;
-
     private Context context;
     private GestureLibrary gestureLibrary;
     private LaunchItemDatabaseManager databaseManager;
@@ -45,6 +47,22 @@ public class LaunchItemProvider implements Subject {
 
         gestureLibrary.addGesture(packageName, gesture);
         databaseManager.putLaunchItem(li);
+
+
+        SharedPreferences prefs = context.getSharedPreferences("gesturesettings", Context.MODE_PRIVATE);
+        Bitmap b = GestureUtil.toBitmap(gesture, prefs.getInt("gestureColor", 0), prefs.getFloat("gestureStrokeWidth", 1));
+        li.setGestureImage(b);
+        Utils.saveBitmapToFile(context, "" + li.getId(), b);
+
+        notifyObservers();
+    }
+
+    public void removeLaunchItem(LaunchItem li) {
+        String packageName = li.getApplicationPackage();
+        gestureLibrary.removeEntry(packageName);
+        databaseManager.removeLaunchItem(li);
+
+        Utils.deleteBitmap(context, "" + li.getId());
 
         notifyObservers();
     }

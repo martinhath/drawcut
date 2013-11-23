@@ -19,5 +19,6 @@
     <string name="desc_touch_to_set_app">Touch the icon to select an app</string>
     <string name="launch_app">Launch an app</string>
     <string name="draw_here">Draw\nhere</string>
+    <string name="edit">Edit</string>
 
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="launchitem_actions">
+        <item>Launch application</item>
+        <item>Delete</item>
+    </string-array>
+</resources>
