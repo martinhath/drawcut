@@ -50,6 +50,7 @@ public class GestureLibrary extends GestureStore {
     public void addGesture(String entryName, Gesture gesture) {
         super.addGesture(entryName, gesture);
         Log.d(TAG, "Gesture added: "+entryName);
+        Log.d(TAG, this.toString()+"");
     }
 
     public void load() {

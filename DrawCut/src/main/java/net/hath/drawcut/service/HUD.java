@@ -61,7 +61,7 @@ public class HUD extends Service implements DrawingView.GestureCallback {
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
-        floaterParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
+        floaterParams.gravity = Gravity.LEFT;
 
         launcherParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.MATCH_PARENT,
@@ -143,6 +143,7 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         drawingView.clear();
 
         GestureLibrary glib = launchItemProvider.getGestureLibrary();
+        Log.d(TAG, glib.toString());
 
         String name = glib.getBestPredictionName(g);
         if (name == null || name.equals("")) {
