@@ -40,14 +40,27 @@ public class StartActivity extends Activity {
         launchItemProvider = LaunchItemProvider.getInstance(this);
 
         SharedPreferences.Editor preferences = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
-        preferences.putInt("gestureColor", getResources().getColor(R.color.drawing_color));
-        preferences.putInt("gestureColorFresh", getResources().getColor(R.color.drawing_color_fresh));
-        preferences.putFloat("gestureStrokeWidth", 10f);
-        preferences.apply();
+        buildSharedPreferences();
 
+        //Start service, if enabled
+        //
+        int service = preferences.getInt("serviceEnabled", 1);
+        if(service > 0)
+            startService(new Intent(this, HUD.class));
 
-        startService(new Intent(this, HUD.class));
+    }
 
+    public void buildSharedPreferences(){
+        sharedPreferences.Editor prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
+        if (prefs.getInt("gestureColor", 0) == 0)
+            prefs.putInt("gestureColor", getResources().getColor(R.color.drawing_color));
+        if (prefs.getInt("gestureColorFresh", 0) == 0)
+            prefs.putInt("gestureColorFresh", getResources().getColor(R.color.drawing_color_fresh));
+        if (prefs.getFloat("gestureStrokeWidth", 0) == 0)
+            prefs.putFloat("gestureStrokeWidth", 10f);
+        if (prefs.getInt("serviceEnabled", -1) == -1)
+            prefs.putInt("serviceEnabled", 1);
+        prefs.apply();
     }
 
     @Override
