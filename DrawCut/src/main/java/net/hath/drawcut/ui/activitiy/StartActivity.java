@@ -6,19 +6,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.gesture.Gesture;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import net.hath.drawcut.R;
 import net.hath.drawcut.data.ApplicationItem;
 import net.hath.drawcut.data.LaunchItem;
 import net.hath.drawcut.data.LaunchItemProvider;
 import net.hath.drawcut.service.HUD;
 import net.hath.drawcut.ui.fragment.LaunchItemListFragment;
-import net.hath.drawcut.util.GestureUtil;
-import net.hath.drawcut.util.Utils;
 
 public class StartActivity extends Activity {
     private static final String TAG = "StartActivity";
@@ -39,28 +37,29 @@ public class StartActivity extends Activity {
 
         launchItemProvider = LaunchItemProvider.getInstance(this);
 
-        SharedPreferences.Editor preferences = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
+        SharedPreferences prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE);
         buildSharedPreferences();
 
         //Start service, if enabled
         //
-        int service = preferences.getInt("serviceEnabled", 1);
+        int service = prefs.getInt("serviceEnabled", 1);
         if(service > 0)
             startService(new Intent(this, HUD.class));
 
     }
 
     public void buildSharedPreferences(){
-        sharedPreferences.Editor prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
+        SharedPreferences prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE);
+        SharedPreferences.Editor editor = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
         if (prefs.getInt("gestureColor", 0) == 0)
-            prefs.putInt("gestureColor", getResources().getColor(R.color.drawing_color));
+            editor.putInt("gestureColor", getResources().getColor(R.color.drawing_color));
         if (prefs.getInt("gestureColorFresh", 0) == 0)
-            prefs.putInt("gestureColorFresh", getResources().getColor(R.color.drawing_color_fresh));
+            editor.putInt("gestureColorFresh", getResources().getColor(R.color.drawing_color_fresh));
         if (prefs.getFloat("gestureStrokeWidth", 0) == 0)
-            prefs.putFloat("gestureStrokeWidth", 10f);
+            editor.putFloat("gestureStrokeWidth", 10f);
         if (prefs.getInt("serviceEnabled", -1) == -1)
-            prefs.putInt("serviceEnabled", 1);
-        prefs.apply();
+            editor.putInt("serviceEnabled", 1);
+        editor.apply();
     }
 
     @Override
@@ -110,6 +109,7 @@ public class StartActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

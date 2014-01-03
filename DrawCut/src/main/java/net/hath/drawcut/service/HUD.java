@@ -8,8 +8,13 @@ import android.gesture.Gesture;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.*;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+
 import net.hath.drawcut.R;
 import net.hath.drawcut.data.GestureLibrary;
 import net.hath.drawcut.data.LaunchItemProvider;
@@ -172,7 +177,6 @@ public class HUD extends Service implements DrawingView.GestureCallback {
         prefs.apply();
 
         windowManager.removeView(floater);
-        windowManager.removeView(launcherView);
     }
 
 }

@@ -21,5 +21,6 @@
     <string name="draw_here">Draw\nhere</string>
     <string name="edit">Edit</string>
     <string name="gesture_nf">Gesture not found</string>
+    <string name="settings_enable_floater">Enable floater</string>
 
 </resources>
