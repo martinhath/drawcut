@@ -30,14 +30,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="393582c8-8620-4d4a-9e6c-b01dd9a5d0da" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/ui/activitiy/SettingsActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/DrawCut/src/main/res/layout/settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DrawCut/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/DrawCut/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DrawCut/DrawCut.iml" afterPath="$PROJECT_DIR$/DrawCut/DrawCut.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/service/HUD.java" afterPath="$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/service/HUD.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/ui/activitiy/StartActivity.java" afterPath="$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/ui/activitiy/StartActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DrawCut/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/DrawCut/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="drawcut.iws" />
@@ -105,7 +97,7 @@
       <file leaf-file-name="StartActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/ui/activitiy/StartActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="0" selection-start="613" selection-end="613" vertical-scroll-proportion="0.5633803" vertical-offset="0" max-vertical-offset="2500">
+            <state line="19" column="0" selection-start="614" selection-end="614" vertical-scroll-proportion="0.5633803" vertical-offset="20" max-vertical-offset="2520">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -116,8 +108,10 @@
       <file leaf-file-name="HUD.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/service/HUD.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="174" column="0" selection-start="6411" selection-end="6411" vertical-scroll-proportion="0.0" vertical-offset="2400" max-vertical-offset="3200">
-              <folding />
+            <state line="179" column="0" selection-start="6542" selection-end="6542" vertical-scroll-proportion="0.0" vertical-offset="2400" max-vertical-offset="3200">
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -125,7 +119,7 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DrawCut/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="44" selection-start="623" selection-end="623" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1060">
+            <state line="16" column="44" selection-start="623" selection-end="623" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1040">
               <folding />
             </state>
           </provider>
@@ -134,7 +128,7 @@
       <file leaf-file-name="SettingsActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/ui/activitiy/SettingsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="40" selection-start="1453" selection-end="1453" vertical-scroll-proportion="0.0" vertical-offset="271" max-vertical-offset="1240">
+            <state line="42" column="40" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.0" vertical-offset="271" max-vertical-offset="1240">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -148,9 +142,9 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="47" selection-start="437" selection-end="437" vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="400">
+            <state line="11" column="47" selection-start="436" selection-end="436" vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="400">
               <folding>
-                <element signature="e#356#389#0" expanded="true" />
+                <element signature="e#355#388#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -164,6 +158,11 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Martin Thoresen" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
@@ -1382,11 +1381,16 @@
       <created>1388784574317</created>
       <updated>1388784574317</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added some folders to git&#10;&#10;gradle/ and .idea/ were added to git, as they apparently should be. The former in order to make checkout from git work without having to mess around with gradle each time, and the latter just because (read it on SO).&#10;&#10;">
+      <created>1388846467297</created>
+      <updated>1388846467297</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="-24" width="1922" height="1105" extended-state="6" />
-    <editor active="true" />
+    <frame x="-1" y="-24" width="1922" height="1105" extended-state="7" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1431,7 +1435,10 @@
       <TodoPanelSettings />
     </option>
     <MESSAGE value="Implemented enable/disable of the floater. &#10;&#10;This is done in the new SettingsActivity. &#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented enable/disable of the floater. &#10;&#10;This is done in the new SettingsActivity. &#10;" />
+    <MESSAGE value="Added some folders to git&#10;&#10;gradle/ and .idea/ were added to git, as they apparently should be. The former in order to make checkout from git work without having to mess around with gradle each time, and the latter just because (read it on SO).&#10;&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added some folders to git&#10;&#10;gradle/ and .idea/ were added to git, as they apparently should be. The former in order to make checkout from git work without having to mess around with gradle each time, and the latter just because (read it on SO).&#10;&#10;" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1500,17 +1507,19 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="47" selection-start="437" selection-end="437" vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="400">
+        <state line="11" column="47" selection-start="436" selection-end="436" vertical-scroll-proportion="-6.875" vertical-offset="0" max-vertical-offset="400">
           <folding>
-            <element signature="e#356#389#0" expanded="true" />
+            <element signature="e#355#388#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/service/HUD.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="174" column="0" selection-start="6411" selection-end="6411" vertical-scroll-proportion="0.0" vertical-offset="2693" max-vertical-offset="3220">
-          <folding />
+        <state line="179" column="0" selection-start="6542" selection-end="6542" vertical-scroll-proportion="0.0" vertical-offset="2400" max-vertical-offset="3200">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1523,7 +1532,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/ui/activitiy/SettingsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="40" selection-start="1453" selection-end="1453" vertical-scroll-proportion="0.0" vertical-offset="271" max-vertical-offset="1240">
+        <state line="42" column="40" selection-start="1461" selection-end="1461" vertical-scroll-proportion="0.0" vertical-offset="271" max-vertical-offset="1240">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1532,7 +1541,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DrawCut/src/main/java/net/hath/drawcut/ui/activitiy/StartActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="613" selection-end="613" vertical-scroll-proportion="0.5633803" vertical-offset="0" max-vertical-offset="2500">
+        <state line="19" column="0" selection-start="614" selection-end="614" vertical-scroll-proportion="0.5633803" vertical-offset="20" max-vertical-offset="2520">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
