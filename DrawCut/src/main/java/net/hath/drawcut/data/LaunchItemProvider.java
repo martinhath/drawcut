@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.gesture.Gesture;
 import android.graphics.Bitmap;
-import android.util.Log;
+
 import net.hath.drawcut.Observer;
 import net.hath.drawcut.Subject;
 import net.hath.drawcut.util.GestureUtil;
@@ -16,6 +16,7 @@ import java.util.List;
 public class LaunchItemProvider implements Subject {
 
     private static final String TAG = "LaunchItemProvider";
+    private static final float BITMAP_RATIO = 0.5F;
     private static LaunchItemProvider instance;
     private List<Observer> observers;
     private Context context;
@@ -26,9 +27,7 @@ public class LaunchItemProvider implements Subject {
     }
 
     public static LaunchItemProvider getInstance(Context context) {
-        Log.d(TAG, "WHAT IS INSTANCE? OH, ITS " + (instance==null?"null":instance.toString()));
         if (instance == null) {
-            Log.d(TAG, "INSTANCIATE LAUNCHITEMPROVIDER");
             instance = new LaunchItemProvider();
             instance.context = context;
             instance.gestureLibrary = new GestureLibrary(context);
@@ -53,7 +52,7 @@ public class LaunchItemProvider implements Subject {
 
 
         SharedPreferences prefs = context.getSharedPreferences("gesturesettings", Context.MODE_PRIVATE);
-        Bitmap b = GestureUtil.toBitmap(gesture, prefs.getInt("gestureColor", 0), prefs.getFloat("gestureStrokeWidth", 1));
+        Bitmap b = GestureUtil.toBitmap(gesture, prefs.getInt("gestureColor", 0), prefs.getFloat("gestureStrokeWidth", 1), BITMAP_RATIO);
         li.setGestureImage(b);
         Utils.saveBitmapToFile(context, "" + li.getId(), b);
 

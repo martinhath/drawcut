@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
 import android.widget.TextView;
+
 import net.hath.drawcut.R;
 import net.hath.drawcut.data.GestureLibrary;
 import net.hath.drawcut.data.LaunchItemProvider;
@@ -21,36 +22,6 @@ public class LauncherActivity extends Activity implements DrawingView.GestureCal
     private LaunchItemProvider launchItemProvider;
 
     @Override
-    protected void onStart() {
-        Log.d(TAG, "onStart");
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        Log.d(TAG, "onResume");
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        Log.d(TAG, "onPause");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        Log.d(TAG, "onStop");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.d(TAG, "onDestroy");
-        super.onDestroy();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "OnCreate");
         super.onCreate(savedInstanceState);
@@ -60,7 +31,6 @@ public class LauncherActivity extends Activity implements DrawingView.GestureCal
 
         drawingView = (DrawingView) findViewById(R.id.draw);
         text = (TextView) findViewById(R.id.text);
-
 
         text.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/roboto-li.ttf"));
 

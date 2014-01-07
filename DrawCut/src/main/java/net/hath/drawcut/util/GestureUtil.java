@@ -17,10 +17,11 @@ public class GestureUtil {
     private static final int NUM_SAMPLES = 20;
     private static final String TAG = "GestureUtil";
 
-    public static Bitmap toBitmap(Gesture gesture, int color, float strokeWidth) {
+    public static Bitmap toBitmap(Gesture gesture, int color, float strokeWidth, float ratio) {
+        strokeWidth *= ratio;
         RectF bounds = gesture.getBoundingBox();
-        int width = (int) bounds.width();
-        int height = (int) bounds.height();
+        int width = (int) (bounds.width() * ratio);
+        int height = (int) (bounds.height() * ratio);
         int extra = (int) strokeWidth;
         final Bitmap bitmap = Bitmap.createBitmap(width + extra, height + extra, Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(bitmap);
@@ -32,7 +33,7 @@ public class GestureUtil {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeWidth(BITMAP_RENDERING_WIDTH);
+        paint.setStrokeWidth(strokeWidth);
 
         final ArrayList<GestureStroke> strokes = gesture.getStrokes();
         final int count = strokes.size();
