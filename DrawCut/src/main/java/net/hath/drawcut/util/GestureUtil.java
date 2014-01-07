@@ -2,7 +2,11 @@ package net.hath.drawcut.util;
 
 import android.gesture.Gesture;
 import android.gesture.GestureStroke;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.RectF;
 
 import java.util.ArrayList;
 
@@ -17,11 +21,9 @@ public class GestureUtil {
         RectF bounds = gesture.getBoundingBox();
         int width = (int) bounds.width();
         int height = (int) bounds.height();
-        final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        int extra = (int) strokeWidth;
+        final Bitmap bitmap = Bitmap.createBitmap(width + extra, height + extra, Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(bitmap);
-
-        int edge = (int) strokeWidth;
-        //canvas.translate(edge, edge);
 
         final Paint paint = new Paint();
         paint.setAntiAlias(BITMAP_RENDERING_ANTIALIAS);
@@ -36,7 +38,8 @@ public class GestureUtil {
         final int count = strokes.size();
 
         for (int i = 0; i < count; i++) {
-            Path path = strokes.get(i).toPath(width - 2 * edge, height - 2 * edge, NUM_SAMPLES);
+            Path path = strokes.get(i).toPath(width - 2 * extra, height - 2 * extra, NUM_SAMPLES);
+            path.offset(extra, extra);
             canvas.drawPath(path, paint);
         }
 
