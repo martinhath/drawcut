@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
 import net.hath.drawcut.R;
@@ -23,7 +24,9 @@ import java.util.List;
 
 public class ApplicationPickerDialog extends DialogFragment {
 
+    private static final String TAG = "ApplicationPicker";
     GridView gridView;
+    ArrayAdapter adapter;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class ApplicationPickerDialog extends DialogFragment {
         builder.setView(view);
         gridView = (GridView) view.findViewById(R.id.application_grid);
 
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -44,37 +48,49 @@ public class ApplicationPickerDialog extends DialogFragment {
             }
         });
 
-        new LoadingTask().execute();
+        List<ApplicationInfo> appList = new ArrayList<ApplicationInfo>();
+        new LoadingTask().execute(appList);
+
+        adapter = new ApplicationAdapter(getActivity(), R.layout.application_item, R.id.app_name, appList);
+        gridView.setAdapter(adapter);
 
         return builder.create();
     }
 
-    private class LoadingTask extends AsyncTask<Void, Void, List<ApplicationInfo>> {
+    private class LoadingTask extends AsyncTask<List<ApplicationInfo>, ApplicationInfo, Void> {
+        List<ApplicationInfo> applist;
 
         @Override
-        protected List<ApplicationInfo> doInBackground(Void... voids) {
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected void onProgressUpdate(ApplicationInfo... values) {
+            super.onProgressUpdate(values);
+            applist.add(values[0]);
+        }
+
+        @Override
+        protected Void doInBackground(List<ApplicationInfo>... appinfo) {
+            applist = appinfo[0];
             List<ApplicationInfo> items = getActivity().getPackageManager()
                     .getInstalledApplications(PackageManager.GET_META_DATA);
             if (items == null) {
                 throw new NullPointerException();
             }
-            List<ApplicationInfo> filteredItems = new ArrayList<ApplicationInfo>();
             PackageManager pm = getActivity().getPackageManager();
+            Collections.sort(items, new ApplicationInfoComparator(pm));
             for (ApplicationInfo ai : items) {
                 Intent i = pm.getLaunchIntentForPackage(ai.packageName);
                 if (i != null) {
-                    filteredItems.add(ai);
+                    onProgressUpdate(ai);
                 }
             }
-            Collections.sort(filteredItems, new ApplicationInfoComparator(pm));
-            return filteredItems;
+            return null;
         }
 
-        @Override
-        protected void onPostExecute(List<ApplicationInfo> applicationInfos) {
-            super.onPostExecute(applicationInfos);
-            gridView.setAdapter(new ApplicationAdapter(getActivity(), R.layout.application_item, R.id.app_name, applicationInfos));
-        }
     }
 
 }
