@@ -50,7 +50,7 @@ public class LaunchItemProvider implements Subject {
         gestureLibrary.addGesture(packageName, gesture);
         databaseManager.putLaunchItem(li);
 
-        SharedPreferences prefs = context.getSharedPreferences("gesturesettings", Context.MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
         Bitmap b = GestureUtil.toBitmap(gesture, prefs.getInt("gestureColor", 0), prefs.getFloat("gestureStrokeWidth", 1), BITMAP_RATIO);
         li.setGestureImage(b);
         Utils.saveBitmapToFile(context, "" + li.getId(), b);

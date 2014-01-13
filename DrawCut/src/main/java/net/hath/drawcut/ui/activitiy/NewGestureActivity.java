@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import net.hath.drawcut.R;
 import net.hath.drawcut.ui.fragment.ApplicationPickerDialog;
 import net.hath.drawcut.view.DrawingView;
@@ -37,12 +38,10 @@ public class NewGestureActivity extends Activity {
         setContentView(R.layout.create_gesture);
         application = null;
 
-
         drawingView = (DrawingView) findViewById(R.id.drawsurface);
         formName = (EditText) findViewById(R.id.nameForm);
 
         appicon = (ImageView) findViewById(R.id.icon);
-
 
         header = (TextView) findViewById(R.id.header);
         TextView subheader = (TextView) findViewById(R.id.subheader);
@@ -78,13 +77,10 @@ public class NewGestureActivity extends Activity {
             return;
         }
 
-
         Intent data = new Intent();
 
         data.putExtra("gesture", gesture);
-
         String name = formName.getText().toString();
-
         data.putExtra("name", name);
         data.putExtra("applicationinfo", application);
 

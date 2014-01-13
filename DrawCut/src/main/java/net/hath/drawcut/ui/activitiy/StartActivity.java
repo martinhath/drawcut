@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.gesture.Gesture;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -37,28 +36,26 @@ public class StartActivity extends Activity {
 
         launchItemProvider = LaunchItemProvider.getInstance(this);
 
-        SharedPreferences prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
         buildSharedPreferences();
 
         //Start service, if enabled
         //
-        int service = prefs.getInt("serviceEnabled", 1);
-        if(service > 0)
+        boolean service = prefs.getBoolean("service_enabled", false);
+        if (service)
             startService(new Intent(this, HUD.class));
 
     }
 
     public void buildSharedPreferences(){
-        SharedPreferences prefs = getSharedPreferences("gesturesettings", MODE_PRIVATE);
-        SharedPreferences.Editor editor = getSharedPreferences("gesturesettings", MODE_PRIVATE).edit();
+        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
         if (prefs.getInt("gestureColor", 0) == 0)
             editor.putInt("gestureColor", getResources().getColor(R.color.drawing_color));
         if (prefs.getInt("gestureColorFresh", 0) == 0)
             editor.putInt("gestureColorFresh", getResources().getColor(R.color.drawing_color_fresh));
         if (prefs.getFloat("gestureStrokeWidth", 0) == 0)
             editor.putFloat("gestureStrokeWidth", 10f);
-        if (prefs.getInt("serviceEnabled", -1) == -1)
-            editor.putInt("serviceEnabled", 1);
         editor.apply();
     }
 
@@ -86,19 +83,12 @@ public class StartActivity extends Activity {
             String name = data.getStringExtra("name");
             ApplicationInfo appinfo = data.getParcelableExtra("applicationinfo");
             if(appinfo == null){
-                Log.d(TAG, "Got null");
                 return;
             }
             ApplicationItem ai = new ApplicationItem(this, appinfo);
-
             LaunchItem gi = new LaunchItem(name, g, ai);
-
             launchItemProvider.addLaunchItem(gi);
-
-            Log.d(TAG, "Added Gesture. ");
-
         } else {
-            Log.w(TAG, "Failed to get result. ");
         }
     }
 

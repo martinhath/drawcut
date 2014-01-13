@@ -53,7 +53,7 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         setFocusable(true);
         setFocusableInTouchMode(true);
 
-        SharedPreferences spref = context.getSharedPreferences("gesturesettings", Context.MODE_PRIVATE);
+        SharedPreferences spref = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
         strokeWidth = spref.getFloat("gestureStrokeWidth", 1);
 
 

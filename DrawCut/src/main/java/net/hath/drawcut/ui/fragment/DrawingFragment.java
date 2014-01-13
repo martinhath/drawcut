@@ -9,8 +9,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+
 import net.hath.drawcut.R;
 import net.hath.drawcut.view.DrawingView;
 
@@ -55,9 +61,7 @@ public class DrawingFragment extends Fragment {
                     FileOutputStream out = new FileOutputStream(path + "/test.png");
                     b.compress(Bitmap.CompressFormat.PNG, 90, out);
                     out.close();
-                    Log.d(TAG, "Saved to " + path + "/test.png");
                 } catch (Exception e) {
-                    Log.w(TAG, "Not saved. ");
                     e.printStackTrace();
                 }
             }
@@ -71,12 +75,9 @@ public class DrawingFragment extends Fragment {
                 Gesture g = drawingView.makeGesture(drawingView.getGestureStrokes());
 
                 ArrayList<Prediction> preds = gl.recognize(g);
-                Log.d(TAG, "Gjettinger:");
                 for (Prediction p : preds) {
                     Log.d(TAG, p.toString());
                 }
-                Log.d(TAG, "Gjettinger_END:");
-
                 drawingView.clear();
             }
         });
@@ -87,7 +88,6 @@ public class DrawingFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        Log.d(TAG, "Menu setup");
         //noinspection ConstantConditions
         menu.findItem(R.id.action_clear).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
