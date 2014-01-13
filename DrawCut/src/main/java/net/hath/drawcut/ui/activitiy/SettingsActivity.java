@@ -1,19 +1,26 @@
 package net.hath.drawcut.ui.activitiy;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 
 import net.hath.drawcut.R;
+import net.hath.drawcut.ui.fragment.PrefsFragment;
 
-public class SettingsActivity extends PreferenceFragment {
-    private static final String TAG = "SettingsActivity";
+
+public class SettingsActivity extends Activity {
+
+    private Fragment content;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getPreferenceManager().setSharedPreferencesName("gesturesettings");
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_container);
 
-        addPreferencesFromResource(R.xml.preferences);
+        if (savedInstanceState == null) {
+            content = new PrefsFragment();
+            getFragmentManager().beginTransaction().add(R.id.container, content).commit();
+        }
+
     }
-
 }
