@@ -17,9 +17,37 @@ android {
     buildToolsVersion "19.0.1"
 
     defaultConfig {
+        versionCode 1
+        versionName "0.1"
         minSdkVersion 14
         targetSdkVersion 19
     }
+
+/**
+    buildTypes {
+        debug {
+            packageNameSuffix ".debug"
+        }
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+        }
+    }
+ myConfig{storeFile file("other.keystore")
+ storePassword System.console().readLine("\n\$ Enter keystore password: ")
+ keyAlias "androiddebugkey"
+ keyPassword System.console().readLine("\n\$ Enter key password: ")}
+    }
+    buildTypes {
+        foo {
+            debuggable true
+            jniDebugBuild true
+            signingConfig signingConfigs.myConfig
+        }
+    }
+  */
 }
 
 dependencies {
