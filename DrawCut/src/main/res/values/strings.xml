@@ -22,5 +22,7 @@
     <string name="edit">Edit</string>
     <string name="gesture_nf">Gesture not found</string>
     <string name="settings_enable_floater">Enable floater</string>
+    <string name="summary_enable_floater">Choose if you want to show or hide the floating button on screen</string>
+    <string name="settings_title_floater">Floater</string>
 
 </resources>
