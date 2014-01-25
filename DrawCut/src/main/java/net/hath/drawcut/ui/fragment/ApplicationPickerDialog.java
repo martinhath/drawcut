@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 
 import net.hath.drawcut.R;
 import net.hath.drawcut.ui.activitiy.NewGestureActivity;
@@ -26,6 +27,7 @@ public class ApplicationPickerDialog extends DialogFragment {
 
     private static final String TAG = "ApplicationPicker";
     GridView gridView;
+    ProgressBar progressBar;
     ArrayAdapter adapter;
 
     @Override
@@ -36,7 +38,9 @@ public class ApplicationPickerDialog extends DialogFragment {
 
         View view = getActivity().getLayoutInflater().inflate(R.layout.application_list, null);
         builder.setView(view);
+
         gridView = (GridView) view.findViewById(R.id.application_grid);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,6 +67,7 @@ public class ApplicationPickerDialog extends DialogFragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            progressBar.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
         }
 
