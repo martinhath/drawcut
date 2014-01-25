@@ -3,6 +3,7 @@
     <color name="white">#ebebeb</color>
     <color name="abs_white">#ffffff</color>
     <color name="grey_lighter">#d0d0d0</color>
+    <color name="grey_light">#bbbbbb</color>
     <color name="grey_dark">#555555</color>
 
     <color name="drawing_color_fresh">#33b5e5</color>

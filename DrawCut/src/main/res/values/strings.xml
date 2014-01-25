@@ -24,5 +24,7 @@
     <string name="settings_enable_floater">Enable floater</string>
     <string name="summary_enable_floater">Choose if you want to show or hide the floating button on screen</string>
     <string name="settings_title_floater">Floater</string>
+    <string name="no_gestures">You don\'t have any gestures!</string>
+    <string name="click_plus_to_create_one">Click the plus to create one</string>
 
 </resources>

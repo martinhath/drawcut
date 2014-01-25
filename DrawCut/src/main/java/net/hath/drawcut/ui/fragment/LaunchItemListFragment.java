@@ -7,12 +7,14 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import net.hath.drawcut.Observer;
 import net.hath.drawcut.R;
@@ -65,6 +67,8 @@ public class LaunchItemListFragment extends Fragment implements Observer {
     public void onStart() {
         super.onStart();
         View emptyView = getActivity().getLayoutInflater().inflate(R.layout.application_item_empty, null);
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto-li.ttf");
+        ((TextView) emptyView.findViewById(R.id.header)).setTypeface(tf);
         ((ViewGroup) getView().getParent()).addView(emptyView);
         listView.setEmptyView(emptyView);
     }
