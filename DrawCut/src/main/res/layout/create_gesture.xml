@@ -14,8 +14,8 @@
             tools:context=".StartActivity$PlaceholderFragment"
             >
 
-        <net.hath.drawcut.view.DrawingView
-                android:id="@+id/drawsurface"
+        <com.mthoresen.drawcut.view.DrawingView
+            android:id="@+id/drawsurface"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:clickable="true"
