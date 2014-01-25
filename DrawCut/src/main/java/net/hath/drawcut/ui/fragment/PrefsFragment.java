@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import net.hath.drawcut.R;
 import net.hath.drawcut.service.HUD;
@@ -30,16 +29,12 @@ public class PrefsFragment extends PreferenceFragment implements SharedPreferenc
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        Log.d(TAG, "Preferences are changed");
         if (s.equals("service_enabled")) {
             boolean shouldStart = sharedPreferences.getBoolean(s, false);
-            if (shouldStart) {
-                // Turn on
-                Intent intent = new Intent(getActivity(), HUD.class);
+            Intent intent = new Intent(getActivity(), HUD.class);
+            if (shouldStart) {  // Turn on
                 getActivity().startService(intent);
-            } else {
-                // Turn off
-                Intent intent = new Intent(getActivity(), HUD.class);
+            } else {            // Turn off
                 getActivity().stopService(intent);
             }
 
