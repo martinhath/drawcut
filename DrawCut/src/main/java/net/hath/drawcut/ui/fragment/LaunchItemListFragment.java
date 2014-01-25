@@ -8,12 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import net.hath.drawcut.Observer;
 import net.hath.drawcut.R;
 import net.hath.drawcut.data.LaunchItem;
@@ -46,6 +46,7 @@ public class LaunchItemListFragment extends Fragment implements Observer {
 
         listView = (ListView) view.findViewById(R.id.gesturelist);
 
+
         listView.setAdapter(listAdapter);
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -58,6 +59,14 @@ public class LaunchItemListFragment extends Fragment implements Observer {
         });
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        View emptyView = getActivity().getLayoutInflater().inflate(R.layout.application_item_empty, null);
+        ((ViewGroup) getView().getParent()).addView(emptyView);
+        listView.setEmptyView(emptyView);
     }
 
     @Override
