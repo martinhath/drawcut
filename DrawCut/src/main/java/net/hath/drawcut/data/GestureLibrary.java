@@ -46,13 +46,6 @@ public class GestureLibrary extends GestureStore {
         return null;
     }
 
-    @Override
-    public void addGesture(String entryName, Gesture gesture) {
-        super.addGesture(entryName, gesture);
-        Log.d(TAG, "Gesture added: "+entryName);
-        Log.d(TAG, this.toString()+"");
-    }
-
     public void load() {
         try {
             InputStream in = context.openFileInput(filename);

@@ -25,7 +25,6 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
     private static final String TAG = "DrawingView";
     private Context context;
     private ArrayList<GesturePoint> points = new ArrayList<GesturePoint>();
-    private ArrayList<GesturePoint> points_old = new ArrayList<GesturePoint>();
     private List<GestureStroke> gestureStrokes = new LinkedList<GestureStroke>();
     private Paint color;
     private Paint color_fresh;
@@ -44,7 +43,7 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
         try {
             listener = (GestureCallback) getContext();
         } catch (ClassCastException e) {
-
+            Log.w(TAG, "Class must implement GestureCallback");
         }
     }
 
@@ -75,7 +74,6 @@ public class DrawingView extends SquareView implements View.OnTouchListener {
 
     public void clear() {
         points.clear();
-        points_old.clear();
         gestureStrokes.clear();
         invalidate();
     }

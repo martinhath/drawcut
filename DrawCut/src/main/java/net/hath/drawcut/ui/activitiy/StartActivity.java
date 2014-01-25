@@ -47,7 +47,7 @@ public class StartActivity extends Activity {
 
     }
 
-    public void buildSharedPreferences(){
+    public void buildSharedPreferences() {
         SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
         SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
         if (prefs.getInt("gestureColor", 0) == 0)
@@ -82,13 +82,12 @@ public class StartActivity extends Activity {
             Gesture g = data.getParcelableExtra("gesture");
             String name = data.getStringExtra("name");
             ApplicationInfo appinfo = data.getParcelableExtra("applicationinfo");
-            if(appinfo == null){
+            if (appinfo == null) {
                 return;
             }
             ApplicationItem ai = new ApplicationItem(this, appinfo);
             LaunchItem gi = new LaunchItem(name, g, ai);
             launchItemProvider.addLaunchItem(gi);
-        } else {
         }
     }
 

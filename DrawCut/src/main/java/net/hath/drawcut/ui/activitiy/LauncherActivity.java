@@ -57,7 +57,7 @@ public class LauncherActivity extends Activity implements DrawingView.GestureCal
 
         String name = glib.getBestPredictionName(g);
         Log.d(TAG, "PACKAGE NAME: " + name);
-        if (name == "" || name == null) {
+        if (name.equals("") || name == null) {
             return;
         }
 

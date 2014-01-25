@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
 import net.hath.drawcut.util.Utils;
 
 import java.util.ArrayList;
@@ -102,8 +103,7 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
         String query = String.format("SELECT * FROM %s WHERE %s = %d",
                 TABLE_LAUNCHITEM, KEY_ID, gi.getId());
         Cursor cursor = db.rawQuery(query, null);
-        Boolean ret = cursor.moveToFirst();
-        return ret;
+        return cursor.moveToFirst();
     }
 
     public List<LaunchItem> getLaunchItems() {
@@ -117,7 +117,6 @@ public class LaunchItemDatabaseManager extends SQLiteOpenHelper {
             return list;
         }
         do {
-            String id = cursor.getString(0);
             String name = cursor.getString(1);
             String packageName = cursor.getString(2);
 
