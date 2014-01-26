@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_medium">
+
+    <com.mthoresen.drawcut.view.DrawingView
+        android:id="@+id/drawsurface"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:background="@drawable/white_box" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_gesture"
+        android:id="@+id/header"
+        android:textSize="@dimen/text_large"
+        android:textColor="@color/grey_dark"
+        android:layout_alignTop="@id/drawsurface"
+        android:layout_alignLeft="@+id/drawsurface"
+        android:layout_alignRight="@+id/drawsurface"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/margin_small" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/desc_touch_to_set_app"
+        android:id="@+id/subheader"
+        android:textSize="@dimen/text_medium"
+        android:textColor="@color/grey_dark"
+        android:paddingTop="@dimen/margin_large"
+        android:paddingLeft="@dimen/margin_large"
+        android:layout_above="@+id/icon"
+        android:layout_alignLeft="@+id/icon"
+        android:layout_alignStart="@+id/icon" />
+
+    <ImageView
+        android:layout_width="@dimen/app_icon_padded"
+        android:layout_height="@dimen/app_icon_padded"
+        android:id="@+id/icon"
+        android:gravity="center_vertical"
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/dummy_icon"
+        android:padding="@dimen/margin_medium"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/drawsurface" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nameForm"
+        android:hint="@string/name"
+        android:maxLines="1"
+        android:inputType="textNoSuggestions"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/icon" />
+
+</RelativeLayout>
+
+
