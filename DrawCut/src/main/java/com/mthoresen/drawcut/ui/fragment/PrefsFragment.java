@@ -1,5 +1,6 @@
 package com.mthoresen.drawcut.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +15,14 @@ import com.mthoresen.drawcut.service.HUD;
  */
 public class PrefsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = "PrefsFragment";
+
+    private Activity activity;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -31,11 +40,11 @@ public class PrefsFragment extends PreferenceFragment implements SharedPreferenc
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (s.equals("service_enabled")) {
             boolean shouldStart = sharedPreferences.getBoolean(s, false);
-            Intent intent = new Intent(getActivity(), HUD.class);
+            Intent intent = new Intent(activity, HUD.class);
             if (shouldStart) {  // Turn on
-                getActivity().startService(intent);
+                activity.startService(intent);
             } else {            // Turn off
-                getActivity().stopService(intent);
+                activity.stopService(intent);
             }
 
         }
